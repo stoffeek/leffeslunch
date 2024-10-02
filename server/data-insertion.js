@@ -1,7 +1,7 @@
 const sqlite3 = require('sqlite3').verbose();
 
-// all dishes and ingredients for inserting into db
-const dishes = {
+// all products and ingredients for inserting into db
+const products = {
   "Kyckling Tikka Masala": [
     { name: "Kyckling", price: 50, quantity: 2 },
     { name: "Tikka Masala krydda", price: 15, quantity: 1 },
@@ -80,8 +80,8 @@ const db = new sqlite3.Database('leffes.db', (err) => {
 const insertProduct = db.prepare('INSERT INTO products (name, price) VALUES (?, ?)');
 const insertIngredient = db.prepare('INSERT INTO ingredients (name, price, quantity) VALUES (?, ?, ?)');
 
-//insert products(dishes) and their ingredients 
-for (const[dish, ingredients] of Object.entries(dishes)) {
+//insert products and their ingredients 
+for (const[product, ingredients] of Object.entries(products)) {
 
   let totalPrice = 0;
 
@@ -90,22 +90,22 @@ for (const[dish, ingredients] of Object.entries(dishes)) {
   });
 
     //inserting products and their ingredients
-  insertProduct.run(dish, totalPrice, (err) => {
+  insertProduct.run(product, totalPrice, (err) => {
     if (err) {
       if (err.message.includes("UNIQUE CONSTRAINT failed")){
-        console.log(`Product ${dish} already exists, skipping`);
+        console.log(`Product ${product} already exists, skipping`);
       } else {
         console.error(err.message);
       }
     } else {
-      console.log(`Inserted product: ${dish} with total price ${totalPrice}`);
+      console.log(`Inserted product: ${product} with total price ${totalPrice}`);
     }
   })
 }
 
 const uniqueIngredients = new Map();
-  //looping through all ingredients in the dishes, not saving any duplicates
-for (const [dish, ingredients] of Object.entries(dishes)) {
+  //looping through all ingredients in the products, not saving any duplicates
+for (const [product, ingredients] of Object.entries(products)) {
   ingredients.forEach(({ name, price, quantity }) => {
 
     if (!uniqueIngredients.has(name)) {
@@ -131,3 +131,59 @@ uniqueIngredients.forEach(({price, quantity}, name) => {
 // finalize prepared statements
 insertProduct.finalize();
 insertIngredient.finalize();
+
+const runAsync = (query, params = []) => {
+  return new Promise((resolve, reject) => {
+    db.run(query, params, function (err) {
+      if (err) reject(err);
+      else resolve(this);
+    });
+  });
+};
+
+
+const getAsync = (query, params = []) => {
+  return new Promise((resolve, reject) => {
+    db.get(query, params, (err, row) => {
+      if (err) reject (err);
+      else resolve(row);
+    });
+  });
+};
+
+async function fillRecipeTable() {
+  try {
+    const insertRecipeData = async (productId, ingredientId, quantity) => {
+      await runAsync('INSERT INTO recipe (product_id, ingredient_id, quantity_needed) VALUES (?, ?, ?)', [productId, ingredientId, quantity]);
+      console.log(`Inserted recipe data for product: ${productId}, ingredient: ${ingredientId}, quantity needed: ${quantity}`);
+    };
+
+    for (const [productName, ingredients] of Object.entries(products)) {
+      const productRow = await getAsync('SELECT id FROM products WHERE name = ?', [productName]);
+
+      if (!productRow) {
+        console.error(`No product found for ${productName}`);
+        continue;
+      }
+
+      const productId = productRow.id;
+
+      for (const { name: ingredientName, quantity } of ingredients) {
+        const ingredientRow = await getAsync('SELECT id FROM ingredients WHERE name = ?', [ingredientName]);
+
+        if (!ingredientRow) {
+          console.error(`No ingredient found for ${ingredientName}`);
+          continue;
+        }
+
+        const ingredientId = ingredientRow.id;
+
+        await insertRecipeData(productId, ingredientId, quantity);
+      }
+    }
+  } catch (err) {
+    console.error(`Error: ${err.message}`);
+  }
+}
+
+fillRecipeTable();
