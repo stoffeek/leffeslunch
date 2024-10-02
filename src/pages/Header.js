@@ -1,9 +1,12 @@
 import React from 'react';
+import './Header.css'; 
+import logo from './img/pelican_header.png'; 
 
 function Header() {
   return (
     <header>
       <nav>
+        <img src={logo} alt="Logo" className="logo" />
         <ul className="nav-list">
           <li className="nav-item">
             <a href="/" className="link">Home</a>
@@ -21,4 +24,3 @@ function Header() {
 }
 
 export default Header;
-
