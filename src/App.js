@@ -1,6 +1,8 @@
-// src/App.js
 import React, { useState } from 'react';
 import './App.css';
+import MeatDishes from './components/MeatDishes';
+import VegetarianDishes from './components/VegetarianDishes';
+import { calculateIngredients } from './utils/calculateIngredients';
 
 const ingredientsMap = {
   kycklingTikka: { chicken: 200, currySauce: 100, rice: 150 },
@@ -24,7 +26,7 @@ function App() {
 
   const HandleSubmit = (e) => {
     e.preventDefault();
-    
+
     const newMeatDishes = {
       kycklingTikka: parseInt(e.target.kycklingTikka.value) || 0,
       fläskfile: parseInt(e.target.fläskfile.value) || 0,
@@ -42,28 +44,16 @@ function App() {
       svamprisotto: parseInt(e.target.svamprisotto.value) || 0,
       curry: parseInt(e.target.curry.value) || 0,
       falafel: parseInt(e.target.falafel.value) || 0,
-      quinoasallad: parseInt(e.target.quinoasallad.value) || 0, 
+      quinoasallad: parseInt(e.target.quinoasallad.value) || 0,
     };
 
+    // Calculate total ingredients for both meat and vegetarian dishes
+    const totalIngredients = calculateIngredients(
+      { ...newMeatDishes, ...newVegetarianDishes },
+      ingredientsMap
+    );
 
-    const calculatedIngredients = {}; 
-
-    const addIngredients = (dishes) => {
-      for (const [dish, quantity] of Object.entries(dishes)) {
-        if (quantity > 0) {
-          const ingredients = ingredientsMap[dish];
-          for (const [ingredient, amount] of Object.entries(ingredients)) {
-            calculatedIngredients[ingredient] = (calculatedIngredients[ingredient] || 0) + amount * quantity;
-          }
-        }
-      }
-    };
-
-    // Calculate for both meat and vegetarian dishes
-    addIngredients(newMeatDishes);
-    addIngredients(newVegetarianDishes);
-
-    setTotalIngredients(calculatedIngredients); // Set the total ingredients
+    setTotalIngredients(totalIngredients);
   };
 
   return (
@@ -71,84 +61,25 @@ function App() {
       <form onSubmit={HandleSubmit}>
         <div className="Header">
           <h1>Leffes Matlådor</h1>
-        </div>        
-        <div className='Meat' id="meat">
-          <h2>Meat Dishes</h2>
-          <div className='Input1'>
-            <h3>Kyckling Tikka Masala</h3>
-            <input type="number" name="kycklingTikka" />
-          </div>
-          <div className='Input2'>
-            <h3>Fläskfilé med gräddsås och potatisgratäng</h3>
-            <input type="number" name="fläskfile" />
-          </div>
-          <div className='Input3'>
-            <h3>Kyckling med couscous och fetaost</h3>
-            <input type="number" name="kycklingCouscous" />
-          </div>
-          <div className='Input4'>
-            <h3>Lax i ugn med citron och dill</h3>
-            <input type="number" name="lax" />
-          </div>
-          <div className='Input5'>
-            <h3>Spaghetti Carbonara</h3>
-            <input type="number" name="carbonara" />
-          </div>
-          <div className='Input6'>
-            <h3>Biff med rödvinssås och rostad potatis</h3>
-            <input type="number" name="biff" />
-          </div>
-          <div className='Input7'>
-            <h3>Köttbullar med potatis</h3>
-            <input type="number" name="köttbullar" />
-          </div>
         </div>
 
-        <div className='Vegetarian' id="vegetarian">
-          <h2>Vegetarian Dishes</h2>
-          <div className='Input1'>
-            <h3>Vegetarisk lasagne</h3>
-            <input type="number" name="lasagne" />
-          </div>
-          <div className='Input2'>
-            <h3>Rödbetsbiffar med potatismos</h3>
-            <input type="number" name="rödbetsbiffar" />
-          </div>
-          <div className='Input3'>
-            <h3>Vegetarisk Pad Thai</h3>
-            <input type="number" name="padThai" />
-          </div>
-          <div className='Input4'>
-            <h3>Svamprisotto</h3>
-            <input type="number" name="svamprisotto" />
-          </div>
-          <div className='Input5'>
-            <h3>Grönsakscurry med kokosmjölk</h3>
-            <input type="number" name="curry" />
-          </div>
-          <div className='Input6'>
-            <h3>Falafel med bulgur och tahinisås</h3>
-            <input type="number" name="falafel" />
-          </div>
-          <div className='Input7'>
-            <h3>Quinoasallad med grillad halloumi</h3>
-            <input type="number" name="quinoasallad" /> {}
-          </div>
-        </div>
-        <button className='SubmitButton'>Submit</button>
+        <MeatDishes />
+        <VegetarianDishes />
+
+        <button className="SubmitButton">Submit</button>
       </form>
 
-      <div className='Results'>
+      <div className="Results">
         <h2>Total Ingredients Required:</h2>
         <ul>
           {Object.entries(totalIngredients).map(([ingredient, amount]) => (
-            <li key={ingredient}>{ingredient}: {amount + " gram"} </li>
+            <li key={ingredient}>
+              {ingredient}: {amount} gram
+            </li>
           ))}
         </ul>
       </div>
-      </div>
-
-
+    </div>
   );
 }
 
