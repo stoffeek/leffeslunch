@@ -36,6 +36,16 @@ app.get('/api/products', (req, res) => {
   });
 });
 
+app.get('/api/ingredients', (req, res) => {
+  const ingredientsQuery = 'SELECT * FROM ingredients';
+  db.all(ingredientsQuery, [], (err, rows) => {
+    if (err){
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(rows);
+  });
+});
+
 // Starta servern
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
