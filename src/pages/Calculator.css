@@ -1,0 +1,89 @@
+.Header {
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+  }
+  
+  .Meat {
+    position: absolute;
+    left: 32%;
+  }
+  
+  .Vegetarian {
+    position: absolute;
+    right: 25%;
+  }
+  
+  .SubmitButton {
+    position: absolute;
+    top: 90%;
+    left: 41%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 50px;
+  }
+  .BuyButton {
+    position: absolute;
+    top: 90%;
+    left: 53%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 50px;
+  }
+  .Results {
+    position: absolute;
+    left: 200px;
+    outline: 3px solid black;
+    outline-offset: 15px;
+  }
+
+
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+
+body{
+    padding: 0px;
+    margin: 0px;
+}
+
+
+.progress-bar {
+    position: absolute;
+    width: 500px;
+    height: 3em;
+    background-color: black;
+    border-radius: 1.5em;
+    color: white;
+    transition: opacity 1s ease; /* Smooth transition for opacity */
+    opacity: 1; /* Fully visible by default */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); /* Center it */
+    z-index: 1000;
+    
+}
+
+.progress-bar.hidden {
+    opacity: 0; /* Hidden state */
+}
+
+.progress-bar::before {
+    content: attr(data-label);
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: .5em;
+    top: .5em;
+    bottom: .5em;
+    width: calc(var(--width, 0) * 1%); /* This will be set dynamically */
+    min-width: 2rem;
+    max-width: calc(100% - 1em);
+    background-color: #069;
+    border-radius: 1em;
+    padding: 1em;
+    transition: width 0.1s ease; /* Smooth transition for width change */
+}
