@@ -69,6 +69,7 @@ const dishes = {
     { name: "Köttbullar", price: 30, quantity: 2 }
   ]
 };
+
 //database connection
 const db = new sqlite3.Database('leffes.db', (err) => {
   if (err) {
@@ -76,20 +77,21 @@ const db = new sqlite3.Database('leffes.db', (err) => {
   }
   console.log('Connected to the SQLite database.');
 });
+
 //preparing queries for inserting values
 const insertProduct = db.prepare('INSERT INTO products (name, price) VALUES (?, ?)');
 const insertIngredient = db.prepare('INSERT INTO ingredients (name, price, quantity) VALUES (?, ?, ?)');
 
 //insert products(dishes) and their ingredients 
-for (const[dish, ingredients] of Object.entries(dishes)) {
-
+for (const[dish, ingredients] of Object.entries(dishes)) 
+{
   let totalPrice = 0;
 
   ingredients.forEach(({ price }) => {
     totalPrice += price;
   });
 
-    //inserting products and their ingredients
+  //inserting products and their ingredients
   insertProduct.run(dish, totalPrice, (err) => {
     if (err) {
       if (err.message.includes("UNIQUE CONSTRAINT failed")){
@@ -104,7 +106,8 @@ for (const[dish, ingredients] of Object.entries(dishes)) {
 }
 
 const uniqueIngredients = new Map();
-  //looping through all ingredients in the dishes, not saving any duplicates
+
+//looping through all ingredients in the dishes, not saving any duplicates
 for (const [dish, ingredients] of Object.entries(dishes)) {
   ingredients.forEach(({ name, price, quantity }) => {
 
@@ -113,7 +116,8 @@ for (const [dish, ingredients] of Object.entries(dishes)) {
     }
   });
 }
-  //insert unique ingredients, to avoid duplicates
+
+//insert unique ingredients, to avoid duplicates
 uniqueIngredients.forEach(({price, quantity}, name) => {
   insertIngredient.run(name, price, quantity, (err) => {
     if (err) {
