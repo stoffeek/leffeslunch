@@ -60,6 +60,7 @@ db.run(`CREATE TABLE IF NOT EXISTS recipe(
   FOREIGN KEY (product_id) REFERENCES products(id),
   FOREIGN KEY (ingredient_id) REFERENCES ingredients(id)
   );`)
+  
   }
 })
 
