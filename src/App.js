@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Header from './pages/Header';
 import Ordering from './pages/Ordering';
 import History from './pages/History'; 
+import Contact from './pages/Contact';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/leffes/ordering" element={<Ordering />} />
           <Route path="/leffes/history" element={<History />} /> 
+          <Route path ="/contact" element={<Contact />} />
         </Routes>
       </div>
     </Router>
