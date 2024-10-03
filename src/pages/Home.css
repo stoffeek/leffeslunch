@@ -1,0 +1,66 @@
+.homelogo, .slogan, .subheader, .leffelogo {
+    display: block;
+    margin: 0 auto;
+    max-width: 65%;
+    text-align: center; 
+  }
+  
+  .homelogo {
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+    animation-delay: 1s;
+  }
+  
+  .slogan {
+    opacity: 0;
+    width: 0; 
+    overflow: hidden;
+    animation: fadeInWidth 4s forwards;
+    animation-delay: 2s;
+  }
+  
+  .subheader {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem; /* Adjust size as needed */
+    color: #053e92;
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+    animation-delay: 6s; 
+    margin-top: 55px; 
+    text-shadow: 2px 2px 4px rgba(174, 210, 243, 0.5);
+    letter-spacing: 0.6rem;  
+  }
+  
+  .leffelogo {
+    opacity: 0;
+    animation: fadeIn 2s forwards, zoom 3s infinite ease-in-out;
+    animation-delay: 8s;
+    margin-top: 35px;
+    width: 500px; /* Adjust the width as needed */
+    height: auto;  
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeInWidth {
+    to {
+      opacity: 1;
+      width: 100%; 
+    }
+  }
+  
+  @keyframes zoom {
+    0% {
+      transform: scale(1); /* Normal size */
+    }
+    50% {
+      transform: scale(1.1); /* Slight zoom in */
+    }
+    100% {
+      transform: scale(1); /* Back to normal size */
+    }
+}
