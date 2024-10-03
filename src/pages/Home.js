@@ -9,7 +9,7 @@ function Home() {
   const navigate = useNavigate();
 
   const handleLogoClick = () => {
-    navigate('/calculator');
+    navigate('/leffes/Ordering');
   };
 
   return (

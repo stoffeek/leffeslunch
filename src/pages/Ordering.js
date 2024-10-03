@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './Calculator.css';
+import './Ordering.css';
+import { useNavigate } from 'react-router-dom';
 
 const ingredientsMap = {
   kycklingTikka: { chicken: 200, currySauce: 100, rice: 150 },
@@ -23,7 +24,7 @@ function Calculator() {
   const [progress, setProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [isFading, setIsFading] = useState(false);
-  const [intervalId, setIntervalId] = useState(null); // State for the interval
+  const [intervalId, setIntervalId] = useState(null); 
 
   useEffect(() => {
     let timeout;
@@ -32,30 +33,37 @@ function Calculator() {
         setProgress((prev) => {
           if (prev >= 100) {
             clearInterval(id);
-            return 100; // Ensure progress stays at 100 if it exceeds
+            return 100; 
           }
           return prev + 1.9;
         });
       }, 50);
-      setIntervalId(id); // Save the interval ID
+      setIntervalId(id);
 
-      return () => clearInterval(id); // Clear the interval when the component unmounts or re-runs
+   
+    
+      return () => clearInterval(id); 
     } else if (progress >= 100) {
       setIsFading(true);
       timeout = setTimeout(() => {
         setIsVisible(false);
         setIsFading(false);
-        setProgress(0); // Reset progress for next use
-      }, 2000); // Wait 2 seconds before hiding
+        setProgress(0);
+      }, 2000); 
     }
 
-    return () => clearTimeout(timeout); // Clear the timeout if the component unmounts
-  }, [isVisible, progress]); // Add dependencies here
+    return () => clearTimeout(timeout); 
+  }, [isVisible, progress]);
 
   const handleStartProgress = () => {
-    setIsVisible(true); // Show progress bar
-    setProgress(0); // Reset progress to 0
-    setIsFading(false); // Reset fading effect
+    setIsVisible(true); 
+    setProgress(0); 
+    setIsFading(false); 
+  };
+  const navigate = useNavigate();
+
+  const handleHistory = () => {
+    navigate('/leffes/history');
   };
 
   const handleSubmit = (e) => {
@@ -71,7 +79,7 @@ function Calculator() {
       köttbullar: parseInt(e.target.köttbullar.value) || 0,
     };
     
-    const newVegetarianDishes = {
+    const VegetarianDishes = {
       lasagne: parseInt(e.target.lasagne.value) || 0,
       rödbetsbiffar: parseInt(e.target.rödbetsbiffar.value) || 0,
       padThai: parseInt(e.target.padThai.value) || 0,
@@ -107,7 +115,11 @@ function Calculator() {
         </div>
       )}
       <button className='BuyButton' onClick={handleStartProgress}>Buy</button>
-      {/* Your form and other code here */}
+
+      <button className='HistoryButton' onClick={handleHistory}>Order History</button>
+
+
+
       <form onSubmit={handleSubmit}>
         <div className="Header">
           <h1>Leffes Matlådor</h1>
