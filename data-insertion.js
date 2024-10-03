@@ -141,7 +141,6 @@ const runAsync = (query, params = []) => {
   });
 };
 
-
 const getAsync = (query, params = []) => {
   return new Promise((resolve, reject) => {
     db.get(query, params, (err, row) => {
