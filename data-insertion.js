@@ -132,57 +132,57 @@ uniqueIngredients.forEach(({price, quantity}, name) => {
 insertProduct.finalize();
 insertIngredient.finalize();
 
-// const runAsync = (query, params = []) => {
-//   return new Promise((resolve, reject) => {
-//     db.run(query, params, function (err) {
-//       if (err) reject(err);
-//       else resolve(this);
-//     });
-//   });
-// };
+const runAsync = (query, params = []) => {
+  return new Promise((resolve, reject) => {
+    db.run(query, params, function (err) {
+      if (err) reject(err);
+      else resolve(this);
+    });
+  });
+};
 
-// const getAsync = (query, params = []) => {
-//   return new Promise((resolve, reject) => {
-//     db.get(query, params, (err, row) => {
-//       if (err) reject (err);
-//       else resolve(row);
-//     });
-//   });
-// };
+const getAsync = (query, params = []) => {
+  return new Promise((resolve, reject) => {
+    db.get(query, params, (err, row) => {
+      if (err) reject (err);
+      else resolve(row);
+    });
+  });
+};
 
-// async function fillRecipeTable() {
-//   try {
-//     const insertRecipeData = async (productId, ingredientId, quantity) => {
-//       await runAsync('INSERT INTO recipe (product_id, ingredient_id, quantity_needed) VALUES (?, ?, ?)', [productId, ingredientId, quantity]);
-//       console.log(`Inserted recipe data for product: ${productId}, ingredient: ${ingredientId}, quantity needed: ${quantity}`);
-//     };
+async function fillRecipeTable() {
+  try {
+    const insertRecipeData = async (productId, ingredientId, quantity) => {
+      await runAsync('INSERT INTO recipe (product_id, ingredient_id, quantity_needed) VALUES (?, ?, ?)', [productId, ingredientId, quantity]);
+      console.log(`Inserted recipe data for product: ${productId}, ingredient: ${ingredientId}, quantity needed: ${quantity}`);
+    };
 
-//     for (const [productName, ingredients] of Object.entries(products)) {
-//       const productRow = await getAsync('SELECT id FROM products WHERE name = ?', [productName]);
+    for (const [productName, ingredients] of Object.entries(products)) {
+      const productRow = await getAsync('SELECT id FROM products WHERE name = ?', [productName]);
 
-//       if (!productRow) {
-//         console.error(`No product found for ${productName}`);
-//         continue;
-//       }
+      if (!productRow) {
+        console.error(`No product found for ${productName}`);
+        continue;
+      }
 
-//       const productId = productRow.id;
+      const productId = productRow.id;
 
-//       for (const { name: ingredientName, quantity } of ingredients) {
-//         const ingredientRow = await getAsync('SELECT id FROM ingredients WHERE name = ?', [ingredientName]);
+      for (const { name: ingredientName, quantity } of ingredients) {
+        const ingredientRow = await getAsync('SELECT id FROM ingredients WHERE name = ?', [ingredientName]);
 
-//         if (!ingredientRow) {
-//           console.error(`No ingredient found for ${ingredientName}`);
-//           continue;
-//         }
+        if (!ingredientRow) {
+          console.error(`No ingredient found for ${ingredientName}`);
+          continue;
+        }
 
-//         const ingredientId = ingredientRow.id;
+        const ingredientId = ingredientRow.id;
 
-//         await insertRecipeData(productId, ingredientId, quantity);
-//       }
-//     }
-//   } catch (err) {
-//     console.error(`Error: ${err.message}`);
-//   }
-// }
+        await insertRecipeData(productId, ingredientId, quantity);
+      }
+    }
+  } catch (err) {
+    console.error(`Error: ${err.message}`);
+  }
+}
 
-// fillRecipeTable();
+fillRecipeTable();
