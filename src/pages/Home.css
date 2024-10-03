@@ -36,7 +36,7 @@
     opacity: 0;
     animation: fadeIn 2s forwards, zoom 3s infinite ease-in-out;
     animation-delay: 6s;
-    margin-top: 35px;
+    margin-top: 25px;
     width: 400px; 
     height: auto;  
   }
