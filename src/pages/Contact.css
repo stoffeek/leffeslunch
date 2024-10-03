@@ -1,6 +1,10 @@
 .contact-container {
     text-align: center;
     padding: 20px;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    animation-delay: 0.5s;
+    
   }
   
   .team-grid {
