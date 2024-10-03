@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Importera Link från react-router-dom
 import logo from './img/pelican_header.png'; 
 import '../pages/Header.css';
 
@@ -9,13 +10,13 @@ function Header() {
         <img src={logo} alt="Logo" className="logo" />
         <ul className="nav-list">
           <li className="nav-item">
-            <a href="/" className="link">Home</a>
+            <Link to="/" className="link">Home</Link>
           </li>
           <li className="nav-item">
-            <a href="/about" className="link">About</a>
+            <Link to="/leffes/ordering" className="link">Ordering</Link>
           </li>
           <li className="nav-item">
-            <a href="/contact" className="link">Contact</a>
+            <Link to="/leffes/history" className="link">History</Link>
           </li>
         </ul>
       </nav>
