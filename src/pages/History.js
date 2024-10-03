@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './History.css'; // Ensure you import your CSS file
+import leffesLogo from './img/leffelogo.png';
+import myAccount from './img/my_account.png';
 
 const OrderHistory = () => {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -34,11 +36,16 @@ const OrderHistory = () => {
 
   return (
     <div className="OrderHistoryContainer">
-      <h1 className="AccountHeader">My Account - Leffes Lunchlådor</h1>
-      <button className="NewOrderButton" onClick={handleNewOrder}>
+      <img src={myAccount} alt="My Account" className="MyAcc" />
+      <div className="HeaderRow">
+    <img src={leffesLogo} alt="Leffes Lunchlådor Logo" className="LeffesLogo" />
+</div>
+<div className="OrderRow">
+    <h2 className="OrderHistory">ORDER HISTORY</h2>
+    <button className="NewOrderButton" onClick={handleNewOrder}>
         + New Order
-      </button>
-      <h2>ORDER HISTORY</h2>
+    </button>
+</div>
       <table className="OrderTable">
         <thead>
           <tr>

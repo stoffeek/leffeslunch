@@ -3,41 +3,61 @@
     font-family: 'Roboto', sans-serif;
   }
 
-  .AccountHeader {
-    font-size: 2.8rem; 
-    margin-top: 25px;
-    margin-bottom: 100px; 
-    color: #244679;
-    font-weight: 400;
-    text-shadow: 1px 1px 2px rgba(120, 176, 228, 0.87);
-  }
+  .MyAcc {
+    width: 500px; /* Set the desired width */
+    height: auto; /* Maintain aspect ratio */
+    margin-top: 10px; /* Add space around the image */
+    display: block; 
+}
+
+  .HeaderRow {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.OrderRow {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    padding: 10px; 
+    width: 100%; 
+}
+
+.OrderHistory {
+    margin: 0;
+}
 
   .NewOrderButton {
-    background-color: #244679; /* Green background color */
-    color: white; /* White text color */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    padding: 10px 15px; /* Padding inside the button */
-    cursor: pointer; /* Pointer cursor on hover */
-    font-size: 1.2rem; /* Font size */
-    margin-bottom: 40px; /* Space below the button */
-    display: block; /* Make the button a block element */
-    width: fit-content; /* Adjust width to fit content */
-    transition: background-color 0.3s; /* Smooth transition for background color */
+    background-color: #244679; 
+    color: white;
+    border: none; 
+    border-radius: 5px; 
+    padding: 10px 15px; 
+    cursor: pointer; 
+    font-size: 1.2rem; 
+    margin-bottom: 40px;
+    margin-left: auto;
+    display: block; 
+    width: fit-content; 
+    transition: background-color 0.3s; 
   }
   
   .NewOrderButton:hover {
-    background-color: #4e9feb; /* Darker green on hover */
+    background-color: #4e9feb; 
   }
   
-  
+  .LeffesLogo {
+    width: 550px; 
+  }
+
   .OrderHistory h2 {
-    font-size: 1.8rem; /* Font size for the h2 header */
-    margin-bottom: 20px; /* Space below the h2 header */
-    text-align: left; /* Left-align the h2 header */
-    color: #555; /* Dark gray color for the h2 header */
-    border-bottom: 2px solid #ccc; /* Add a bottom border */
-    padding-bottom: 10px; /* Space below the text before the border */
+    font-size: 1.8rem; 
+    margin-bottom: 20px; 
+    text-align: left; 
+    color: #555; 
+    border-bottom: 2px solid #ccc; 
+    padding-bottom: 10px; 
   }
   
   .OrderTable {
@@ -59,7 +79,7 @@
   }
   
   .OrderTable tr:hover {
-    background-color: #f1f1f1; /* Highlight row on hover */
+    background-color: #f1f1f1; 
   }
   
   .ViewDetailsButton {
