@@ -9,7 +9,7 @@ function Home() {
   const navigate = useNavigate();
 
   const handleLogoClick = () => {
-    navigate('/leffes/Ordering');
+    navigate('/leffes/ordering');
   };
 
   return (
