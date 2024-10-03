@@ -22,6 +22,7 @@ body, input, button {
 .Header img {
   width: 500px; 
   height: auto;
+  margin-top: 10px;
 }
 
 .HistoryButton {
