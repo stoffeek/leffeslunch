@@ -23,6 +23,9 @@ body, input, button {
   width: 500px; 
   height: auto;
   margin-top: 10px;
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+  animation-delay: 0.5s;
 }
 
 .HistoryButton {
@@ -37,12 +40,22 @@ body, input, button {
   display: block; 
   width: 200px;
   transition: background-color 0.3s;
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+  animation-delay: 0.5s;
 }
 
 .DishContainer {
   display: flex; 
   justify-content: space-between; 
   width: 100%; 
+  padding: 20px;
+  border: 2px solid #2a3969;
+  border-radius: 10px;
+  box-shadow: 0px 3px 6px rgba(48, 53, 112, 0.2), inset 0px 0px 0px 5px #9dc2e6; 
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+  animation-delay: 0.5s;
 }
 
 .Meat, .Vegetarian {
@@ -63,14 +76,17 @@ body, input, button {
 .Results {
   width: 40%; 
   padding: 20px;
-  border: 2px solid #333;
+  border: 2px solid #2a3969;
   border-radius: 10px;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2), inset 0px 0px 0px 5px #84a6b6;
+  box-shadow: 0px 3px 6px rgba(48, 53, 112, 0.2), inset 0px 0px 0px 5px #9dc2e6;
   margin-left: 30px;
   display: flex; 
   flex-direction: column;
   align-items: center; 
   text-align: center;
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+  animation-delay: 0.5s;
 }
 
 .Results h2 {
@@ -140,6 +156,9 @@ button:hover {
     display: block; 
     width: 200px;
     transition: background-color 0.3s;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    animation-delay: 0.5s;
 }
 
 .SubmitButton {

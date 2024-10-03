@@ -1,13 +1,19 @@
 .OrderHistoryContainer {
     padding: 20px;
     font-family: 'Roboto', sans-serif;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    animation-delay: 0.5s;
   }
 
   .MyAcc {
-    width: 500px; /* Set the desired width */
-    height: auto; /* Maintain aspect ratio */
-    margin-top: 10px; /* Add space around the image */
+    width: 500px;
+    height: auto;
+    margin-top: 20px; 
     display: block; 
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    animation-delay: 0.5s;
 }
 
   .HeaderRow {
