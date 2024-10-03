@@ -24,7 +24,6 @@ function Calculator() {
   const [progress, setProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [isFading, setIsFading] = useState(false);
-  const [intervalId, setIntervalId] = useState(null); 
 
   useEffect(() => {
     let timeout;
@@ -38,7 +37,6 @@ function Calculator() {
           return prev + 1.9;
         });
       }, 50);
-      setIntervalId(id);
 
    
     
