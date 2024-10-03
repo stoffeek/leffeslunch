@@ -47,7 +47,7 @@ const OrderHistory = () => {
             <th>Purchaser/Bill-to Name</th>
             <th>Total</th>
             <th>Order Status</th>
-            <th>Action</th>
+            <th>Receipt</th>
           </tr>
         </thead>
         <tbody>
