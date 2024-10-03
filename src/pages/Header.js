@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from './img/pelican_header.png'; 
-import '../css/Header.css';
+import '../pages/Header.css';
 
 function Header() {
   return (
