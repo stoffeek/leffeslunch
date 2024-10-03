@@ -25,7 +25,46 @@ app.get('/api', (req, res) => {
   res.json({ message: 'Hello from Express server!' });
 });
 
+// Hämta rätter från databasen
+app.get('/api/products', (req, res) => {
+  const productsQuery = 'SELECT * FROM products';
+  db.all(productsQuery, [], (err, rows) => {
+    if (err){
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(rows);
+  });
+});
 
+app.get('/api/ingredients', (req, res) => {
+  const ingredientsQuery = 'SELECT * FROM ingredients';
+  db.all(ingredientsQuery, [], (err, rows) => {
+    if (err){
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(rows);
+  });
+});
+
+app.get('/api/recipe', (req, res) => {
+  const ingredientsQuery = 'SELECT * FROM recipe';
+  db.all(ingredientsQuery, [], (err, rows) => {
+    if (err){
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(rows);
+  });
+});
+
+app.get('/api/sales', (req, res) => {
+  const ingredientsQuery = 'SELECT * FROM sales';
+  db.all(ingredientsQuery, [], (err, rows) => {
+    if (err){
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(rows);
+  });
+});
 
 // Starta servern
 app.listen(PORT, () => {
