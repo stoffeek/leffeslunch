@@ -3,22 +3,53 @@ import './Ordering.css';
 import { useNavigate } from 'react-router-dom';
 import leffeslogo from './img/leffelogo.png';
 
-const ingredientsMap = {
-  kycklingTikka: { chicken: 200, currySauce: 100, rice: 150 },
-  fläskfile: { pork: 200, cream: 100, potatoes: 150 },
-  kycklingCouscous: { chicken: 200, couscous: 100, feta: 50 },
-  lax: { salmon: 200, lemon: 50, dill: 20 },
-  carbonara: { pasta: 100, bacon: 150, cream: 100 },
-  biff: { beef: 200, redWine: 50, potatoes: 150 },
-  köttbullar: { beef: 150, breadcrumbs: 50, potatoes: 150 },
-  lasagne: { pasta: 200, cheese: 100, tomatoSauce: 100 },
-  rödbetsbiffar: { beets: 150, potatoes: 150, cream: 100 },
-  padThai: { riceNoodles: 150, tofu: 100, peanuts: 50 },
-  svamprisotto: { rice: 200, mushrooms: 150, broth: 100 },
-  curry: { vegetables: 200, coconutMilk: 100, spices: 20 },
-  falafel: { chickpeas: 150, tahini: 50, salad: 100 },
-  quinoasallad: { quinoa: 200, halloumi: 100, vegetables: 100 },
-};
+const API_URL = 'http://localhost:5001/api';
+
+export const fetchProdcuts = async () => {
+  try {
+    const response = await fetch(`${API_URL}/products`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch products: ' + response.statusText);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error){
+    console.error('Error fetching products: ', error);
+    throw error;
+  }
+}
+
+export const createIngredientsMap = async () => {
+  try {
+    const products = await fetchProdcuts();
+
+    const ingredientsMap = {};
+
+    products.forEach((product) => {
+      const { name, ingredients } = product;
+
+      ingredientsMap[name] = {};
+
+      ingredients.forEach((ingrdient) => {
+        ingredientsMap[name][ingrdient.name] = ingrdient.quantity;
+      });
+    });
+    return ingredientsMap;
+  } catch (error) {
+    console.error('Error creating ingrdients map', error);
+    throw error;
+  }
+}
+
+createIngredientsMap().then((ingredientsMap) => {
+  console.log(ingredientsMap)
+})
 
 function Calculator() {
   const [totalIngredients, setTotalIngredients] = useState({});
@@ -39,8 +70,7 @@ function Calculator() {
         });
       }, 50);
 
-   
-    
+      
       return () => clearInterval(id); 
     } else if (progress >= 100) {
       setIsFading(true);

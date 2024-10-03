@@ -17,7 +17,7 @@ const db = new sqlite3.Database('leffes.db', (err) => {
 })
 
 // Middleware
-app.use(cors()); // Tillåter cross-origin-requests (ex. från din frontend till backend)
+app.use(cors({ origin: 'http://localhost:3000'})); // Tillåter cross-origin-requests (ex. från din frontend till backend)
 app.use(express.json()); // Gör så att servern kan tolka inkommande JSON-begäran
 
 // En enkel test-rutt för att verifiera att servern fungerar
