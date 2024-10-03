@@ -79,7 +79,7 @@ function Calculator() {
       köttbullar: parseInt(e.target.köttbullar.value) || 0,
     };
     
-    const VegetarianDishes = {
+    const newVegetarianDishes = {
       lasagne: parseInt(e.target.lasagne.value) || 0,
       rödbetsbiffar: parseInt(e.target.rödbetsbiffar.value) || 0,
       padThai: parseInt(e.target.padThai.value) || 0,
