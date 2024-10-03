@@ -1,0 +1,31 @@
+.recipe-container {
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.recipe-container h2 {
+  margin: 0;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+}
+
+.recipe-container ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+}
+
+.recipe-container li {
+  padding: 5px 0;
+}
+
+.recipe-book {
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.recipe-book h1 {
+  margin-bottom: 20px;
+}
