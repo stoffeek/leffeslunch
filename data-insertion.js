@@ -59,7 +59,7 @@ const products = {
     { name: "Smör", price: 6.5, quantity: 50 },
     { name: "Timjan", price: 3.4, quantity: 4 }
   ],
-  "Kokt potatis med gräddsås, köttbullar och lingonsylt": [
+  "Köttbullar med kokt potatis, gräddsås och lingonsylt": [
     { name: "Potatis", price: 3.8, quantity: 200 },
     { name: "Gräddsås", price: 30, quantity: 100 },
     { name: "Lingonsylt", price: 2, quantity: 75 },
