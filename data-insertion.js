@@ -41,31 +41,31 @@ const products = {
     { name: "Peppar", price: 0.25, quantity: 1.5 }
   ],
   "Spaghetti Carbonara": [
-    { name: "Spaghetti", price: 12, quantity: 1 },
-    { name: "Bacon", price: 25, quantity: 2 },
-    { name: "Grädde", price: 15, quantity: 1 },
-    { name: "Ägg", price: 10, quantity: 3 },
-    { name: "Parmesan", price: 30, quantity: 1 },
-    { name: "Svartpeppar", price: 2, quantity: 1 },
-    { name: "Salt", price: 1, quantity: 1 }
+    { name: "Spaghetti", price: 1.4, quantity: 100 },
+    { name: "Bacon", price: 10, quantity: 130 },
+    { name: "Grädde", price: 4.25, quantity: 125 },
+    { name: "Ägg", price: 3.5, quantity: 55 },
+    { name: "Parmesan", price: 13.2, quantity: 50 },
+    { name: "Svartpeppar", price: 2, quantity: 1.5 },
+    { name: "Salt", price: 0.05, quantity: 4 }
   ],
   "Biff med rödvinssås och rostad potatis": [
-    { name: "Biff", price: 80, quantity: 2 },
-    { name: "Rödvinssås", price: 20, quantity: 1 },
-    { name: "Potatis", price: 10, quantity: 4 },
-    { name: "Vitlök", price: 5, quantity: 2 },
-    { name: "Salt", price: 1, quantity: 1 },
-    { name: "Peppar", price: 2, quantity: 1 },
-    { name: "Smör", price: 10, quantity: 1 },
-    { name: "Timjan", price: 3, quantity: 1 }
+    { name: "Biff", price: 43, quantity: 200 },
+    { name: "Rödvinssås", price: 10, quantity: 100 },
+    { name: "Potatis", price: 3.8, quantity: 200 },
+    { name: "Vitlök", price: 0.4, quantity: 10 },
+    { name: "Salt", price: 0.05, quantity: 4 },
+    { name: "Peppar", price: 2, quantity: 1.5 },
+    { name: "Smör", price: 6.5, quantity: 50 },
+    { name: "Timjan", price: 3.4, quantity: 4 }
   ],
   "Kokt potatis med gräddsås, köttbullar och lingonsylt": [
-    { name: "Potatis", price: 10, quantity: 4 },
-    { name: "Gräddsås", price: 20, quantity: 1 },
-    { name: "Lingonsylt", price: 15, quantity: 1 },
-    { name: "Salt", price: 1, quantity: 1 },
-    { name: "Peppar", price: 2, quantity: 1 },
-    { name: "Köttbullar", price: 30, quantity: 2 }
+    { name: "Potatis", price: 3.8, quantity: 200 },
+    { name: "Gräddsås", price: 30, quantity: 100 },
+    { name: "Lingonsylt", price: 2, quantity: 75 },
+    { name: "Salt", price: 0.05, quantity: 4 },
+    { name: "Peppar", price: 2, quantity: 1.5 },
+    { name: "Köttbullar", price: 10.9, quantity: 150 }
   ]
 };
 //database connection
