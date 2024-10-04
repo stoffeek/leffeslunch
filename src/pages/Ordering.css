@@ -58,49 +58,92 @@ body, input, button {
   animation-delay: 0.5s;
 }
 
-.Meat, .Vegetarian {
-  width: 30%;
-  margin: 0 10px;
+.Dishes h2 {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+  margin-bottom: 15px;
+  box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.1);
+  padding: 10px; 
+  background-color: #fff; 
+  border-radius: 6px; 
 }
 
-.Meat h2 {
-  text-shadow: 2px 2px 4px rgba(174, 210, 243, 0.5);
-  margin-bottom: 15px;
-}
-
-.Vegetarian h2 {
-  text-shadow: 2px 2px 4px rgba(174, 210, 243, 0.5);
-  margin-bottom: 15px;
+.Results {
+  width: 100%; 
+  max-width: 380px; 
+  max-height: 540px;
+  padding: 20px;
+  border: 3px solid #2a3969; 
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(15, 29, 182, 0.2), inset 0px 0px 0px 5px #9dc2e6;
+  overflow-y: auto;
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 6px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 .Results ul {
-  width: 40%; 
+  max-height: 100%; 
+  width: 100%;
   padding: 20px;
-  border: 2px solid #2a3969;
+  overflow-y: auto; 
+  list-style-type: none;
+  border-radius: 6px;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  padding-top: 0;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+}
+
+.Results li {
+  margin-bottom: 10px;
+}
+
+.Results {
+  scrollbar-width: thin;
+  scrollbar-color: #244679 #9dc2e6; 
+}
+
+.Results::-webkit-scrollbar {
+  width: 8px;
+}
+
+.Results::-webkit-scrollbar-thumb {
+  background-color: #4e9feb;
   border-radius: 10px;
-  box-shadow: 0px 3px 6px rgba(48, 53, 112, 0.2), inset 0px 0px 0px 5px #9dc2e6;
-  margin-left: 30px;
-  display: flex; 
-  flex-direction: column;
-  align-items: center; 
-  text-align: center;
-  opacity: 0;
-  animation: fadeIn 1s forwards;
-  animation-delay: 0.5s;
+}
+
+.Results::-webkit-scrollbar-track {
+  background-color: #9dc2e6;
 }
 
 .Results h2 {
-  font-family: 'Roboto', sans-serif; 
-  font-size: 1.5rem; 
-  margin-bottom: 15px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem;
+  position: sticky; 
+  top: 0; 
+  background-color: white; 
+  z-index: 2; 
+  padding: 10px 0; 
+  width: 100%; 
+  border-bottom: 1px solid #2a3969;
 }
 
 .Results ul {
-  list-style-type: none; 
-  padding: 0; 
+  max-height: 500px; 
+  width: 100%;
+  padding: 20px;
+  overflow-y: auto; 
+  list-style-type: none;
+  border-radius: 6px;
   margin: 0;
   font-family: 'Roboto', sans-serif;
-  font-size: 1rem; 
+  font-size: 1rem;
+  padding-top: 0;
 }
 
 .Results li {
