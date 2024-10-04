@@ -22,7 +22,7 @@ const developers = [
     },
     {
         name: 'Lilly Wong',
-        role: 'Professional planner',
+        role: 'Executive Master planner',
         email: 'lilly.wong@pelicans.com',
         image: lillyImage
     },
