@@ -5,7 +5,7 @@ const products = {
   "Kyckling Tikka Masala": [
     { name: "Kyckling", price: 32, quantity: 200 },
     { name: "Tikka Masala krydda", price: 1, quantity: 5 },
-    { name: "Yoghurt", price: 1.25, quantity: 50 },
+    { name: "Yoghurt", price: 1, quantity: 50 },
     { name: "Ris", price: 2, quantity: 60 },
     { name: "Gurka", price: 2, quantity: 50 },
     { name: "Paprika", price: 4, quantity: 50 },
