@@ -73,7 +73,7 @@ body, input, button {
   margin-bottom: 15px;
 }
 
-.Results {
+.Results ul {
   width: 40%; 
   padding: 20px;
   border: 2px solid #2a3969;

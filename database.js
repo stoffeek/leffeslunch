@@ -11,14 +11,22 @@ const db = new sqlite3.Database('leffes.db', (err) => {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         price INTEGER NOT NULL
-      );`);
+      );`, (err) => {
+        if (err) {
+          console.error('Error creating products table: ' + err.message);
+        }
+      });
 
       db.run(`CREATE TABLE IF NOT EXISTS ingredients(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         price INTEGER NOT NULL,
         quantity INTEGER NOT NULL
-      );`);
+      );`, (err) => {
+        if (err) {
+          console.error('Error creating ingredients table: ' + err.message);
+        }
+      });
 
       db.run(`CREATE TABLE IF NOT EXISTS sales(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -26,7 +34,11 @@ const db = new sqlite3.Database('leffes.db', (err) => {
         profit INTEGER NOT NULL,
         date DATETIME,
         leftovers_sold INTEGER NOT NULL
-      );`);
+      );`, (err) => {
+        if (err) {
+          console.error('Error creating sales table: ' + err.message);
+        }
+      });
 
       db.run(`CREATE TABLE IF NOT EXISTS orders(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -36,7 +48,11 @@ const db = new sqlite3.Database('leffes.db', (err) => {
         leftover_quantity INTEGER NOT NULL,
         sales_id INTEGER NOT NULL,
         FOREIGN KEY (sales_id) REFERENCES sales(id)
-      );`);
+      );`, (err) => {
+        if (err) {
+          console.error('Error creating orders table: ' + err.message);
+        }
+      });
 
       db.run(`CREATE TABLE IF NOT EXISTS order_items(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -44,7 +60,11 @@ const db = new sqlite3.Database('leffes.db', (err) => {
         product_id INTEGER NOT NULL,
         FOREIGN KEY (order_id) REFERENCES orders(id),
         FOREIGN KEY (product_id) REFERENCES products(id)
-      );`);
+      );`, (err) => {
+        if (err) {
+          console.error('Error creating order_items table: ' + err.message);
+        }
+      });
 
       db.run(`CREATE TABLE IF NOT EXISTS recipe(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -53,7 +73,11 @@ const db = new sqlite3.Database('leffes.db', (err) => {
         quantity_needed INTEGER,
         FOREIGN KEY (product_id) REFERENCES products(id),
         FOREIGN KEY (ingredient_id) REFERENCES ingredients(id)
-      );`);
+      );`, (err) => {
+        if (err) {
+          console.error('Error creating recipe table: ' + err.message);
+        }
+      });
     });
   }
 });
