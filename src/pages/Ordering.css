@@ -69,8 +69,8 @@ body, input, button {
 
 .Results {
   width: 100%; 
-  max-width: 380px; 
-  max-height: 540px;
+  max-width: 358px; 
+  max-height: 570px;
   padding: 20px;
   border: 3px solid #2a3969; 
   border-radius: 10px;
@@ -101,6 +101,7 @@ body, input, button {
 
 .Results li {
   margin-bottom: 10px;
+  margin-top: 15px;
 }
 
 .Results {

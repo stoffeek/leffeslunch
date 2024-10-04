@@ -169,7 +169,7 @@ function Calculator() {
           </div>
 
           <div className='Results'>
-            <h2>Total Ingredients Required:</h2>
+            <h2>Total Ingredients Required</h2>
             <ul>
               {Object.entries(totalIngredients).map(([ingredient, amount]) => {
                 let displayAmount;
