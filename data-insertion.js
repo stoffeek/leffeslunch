@@ -14,12 +14,12 @@ const products = {
   ],
   "Fläskfilé med gräddsås och potatisgratäng": [
     { name: "Fläskfilé", price: 67, quantity: 200 },
-    { name: "Gräddsås", price: 20, quantity: 1 },
-    { name: "Potatis", price: 10, quantity: 4 },
-    { name: "Ost", price: 25, quantity: 1 },
-    { name: "Grädde", price: 15, quantity: 1 },
-    { name: "Salt", price: 1, quantity: 1 },
-    { name: "Peppar", price: 2, quantity: 1 }
+    { name: "Gräddsås", price: 30, quantity: 100 },
+    { name: "Potatis", price: 3.8, quantity: 200 },
+    { name: "Ost", price: 5, quantity: 100 },
+    { name: "Grädde", price: 3.4, quantity: 100 },
+    { name: "Salt", price: 0.05, quantity: 4 },
+    { name: "Peppar", price: 0.25, quantity: 1.5 }
   ],
   "Kyckling med couscous och fetaost": [
     { name: "Kyckling", price: 50, quantity: 1 },
