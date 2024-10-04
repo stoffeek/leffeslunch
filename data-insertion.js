@@ -22,24 +22,23 @@ const products = {
     { name: "Peppar", price: 0.25, quantity: 1.5 }
   ],
   "Kyckling med couscous och fetaost": [
-    { name: "Kyckling", price: 50, quantity: 1 },
-    { name: "Couscous", price: 12, quantity: 2 },
-    { name: "Fetaost", price: 20, quantity: 1 },
-    { name: "Tomater", price: 8, quantity: 3 },
-    { name: "Olja", price: 5, quantity: 1 },
-    { name: "Citron", price: 3, quantity: 1 },
-    { name: "Salt", price: 1, quantity: 1 },
-    { name: "Peppar", price: 2, quantity: 1 }
+    { name: "Kyckling", price: 31.8, quantity: 200 },
+    { name: "Couscous", price: 2.55, quantity: 75 },
+    { name: "Fetaost", price: 12, quantity: 75 },
+    { name: "Tomater", price: 5.8, quantity: 50 },
+    { name: "Olja", price: 3.2, quantity: 25 },
+    { name: "Citron", price: 7.95, quantity: 125 },
+    { name: "Salt", price: 0.05, quantity: 4 },
+    { name: "Peppar", price: 0.25, quantity: 1.5 }
   ],
   "Lax i ugn med citron och dillsås med kokt potatis": [
-    { name: "Lax", price: 60, quantity: 2 },
-    { name: "Citron", price: 3, quantity: 1 },
-    { name: "Dill", price: 7, quantity: 1 },
-    { name: "Smör", price: 10, quantity: 1 },
-    { name: "Potatis", price: 10, quantity: 4 },
-    { name: "Grädde", price: 15, quantity: 1 },
-    { name: "Salt", price: 1, quantity: 1 },
-    { name: "Peppar", price: 2, quantity: 1 }
+    { name: "Lax", price: 25, quantity: 125 },
+    { name: "Citron", price: 7.95, quantity: 125 },
+    { name: "Dill", price: 0.5, quantity: 2.5 },
+    { name: "Smör", price: 2.6, quantity: 20 },
+    { name: "Potatis", price: 3.8, quantity: 200 },
+    { name: "Salt", price: 0.05, quantity: 4 },
+    { name: "Peppar", price: 0.25, quantity: 1.5 }
   ],
   "Spaghetti Carbonara": [
     { name: "Spaghetti", price: 12, quantity: 1 },
