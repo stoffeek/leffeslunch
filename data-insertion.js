@@ -13,7 +13,7 @@ const products = {
     { name: "Peppar", price: 1, quantity: 2 }
   ],
   "Fläskfilé med gräddsås och potatisgratäng": [
-    { name: "Fläskfilé", price: 67, quantity: 200 },
+    { name: "Fläskfilé", price: 14, quantity: 200 },
     { name: "Gräddsås", price: 30, quantity: 100 },
     { name: "Potatis", price: 4, quantity: 200 },
     { name: "Ost", price: 5, quantity: 100 },
