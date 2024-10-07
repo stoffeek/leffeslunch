@@ -3,70 +3,69 @@ const sqlite3 = require('sqlite3').verbose();
 // all products and ingredients for inserting into db
 const products = {
   "Kyckling Tikka Masala": [
-    { name: "Kyckling", price: 50, quantity: 2 },
-    { name: "Tikka Masala krydda", price: 15, quantity: 1 },
-    { name: "Yoghurt", price: 10, quantity: 1 },
-    { name: "Ris", price: 8, quantity: 2 },
-    { name: "Gurka", price: 5, quantity: 1 },
-    { name: "Paprika", price: 12, quantity: 1 },
-    { name: "Salt", price: 1, quantity: 1 },
-    { name: "Peppar", price: 2, quantity: 1 }
+    { name: "Kyckling", price: 32, quantity: 200 },
+    { name: "Tikka Masala krydda", price: 1, quantity: 5 },
+    { name: "Yoghurt", price: 1, quantity: 50 },
+    { name: "Ris", price: 2, quantity: 60 },
+    { name: "Gurka", price: 2, quantity: 50 },
+    { name: "Paprika", price: 4, quantity: 50 },
+    { name: "Salt", price: 1, quantity: 4 },
+    { name: "Peppar", price: 1, quantity: 2 }
   ],
   "Fläskfilé med gräddsås och potatisgratäng": [
-    { name: "Fläskfilé", price: 70, quantity: 1 },
-    { name: "Gräddsås", price: 20, quantity: 1 },
-    { name: "Potatis", price: 10, quantity: 4 },
-    { name: "Ost", price: 25, quantity: 1 },
-    { name: "Grädde", price: 15, quantity: 1 },
-    { name: "Salt", price: 1, quantity: 1 },
-    { name: "Peppar", price: 2, quantity: 1 }
+    { name: "Fläskfilé", price: 14, quantity: 200 },
+    { name: "Gräddsås", price: 30, quantity: 100 },
+    { name: "Potatis", price: 4, quantity: 200 },
+    { name: "Ost", price: 5, quantity: 100 },
+    { name: "Grädde", price: 3, quantity: 100 },
+    { name: "Salt", price: 1, quantity: 4 },
+    { name: "Peppar", price: 1, quantity: 2 }
   ],
   "Kyckling med couscous och fetaost": [
-    { name: "Kyckling", price: 50, quantity: 1 },
-    { name: "Couscous", price: 12, quantity: 2 },
-    { name: "Fetaost", price: 20, quantity: 1 },
-    { name: "Tomater", price: 8, quantity: 3 },
-    { name: "Olja", price: 5, quantity: 1 },
-    { name: "Citron", price: 3, quantity: 1 },
-    { name: "Salt", price: 1, quantity: 1 },
-    { name: "Peppar", price: 2, quantity: 1 }
+    { name: "Kyckling", price: 32, quantity: 200 },
+    { name: "Couscous", price: 3, quantity: 75 },
+    { name: "Fetaost", price: 12, quantity: 75 },
+    { name: "Tomater", price: 6, quantity: 50 },
+    { name: "Olja", price: 3, quantity: 25 },
+    { name: "Citron", price: 8, quantity: 125 },
+    { name: "Salt", price: 1, quantity: 4 },
+    { name: "Peppar", price: 1, quantity: 2 }
   ],
   "Lax i ugn med citron och dillsås med kokt potatis": [
-    { name: "Lax", price: 60, quantity: 2 },
-    { name: "Citron", price: 3, quantity: 1 },
-    { name: "Dill", price: 7, quantity: 1 },
-    { name: "Smör", price: 10, quantity: 1 },
-    { name: "Potatis", price: 10, quantity: 4 },
-    { name: "Grädde", price: 15, quantity: 1 },
-    { name: "Salt", price: 1, quantity: 1 },
-    { name: "Peppar", price: 2, quantity: 1 }
+    { name: "Lax", price: 25, quantity: 125 },
+    { name: "Citron", price: 8, quantity: 125 },
+    { name: "Dill", price: 1, quantity: 4 },
+    { name: "Smör", price: 3, quantity: 25 },
+    { name: "Potatis", price: 4, quantity: 200 },
+    { name: "Salt", price: 1, quantity: 4 },
+    { name: "Peppar", price: 1, quantity: 2 }
   ],
   "Spaghetti Carbonara": [
-    { name: "Spaghetti", price: 12, quantity: 1 },
-    { name: "Bacon", price: 25, quantity: 2 },
-    { name: "Grädde", price: 15, quantity: 1 },
-    { name: "Ägg", price: 10, quantity: 3 },
-    { name: "Parmesan", price: 30, quantity: 1 },
-    { name: "Svartpeppar", price: 2, quantity: 1 },
-    { name: "Salt", price: 1, quantity: 1 }
+    { name: "Spaghetti", price: 1, quantity: 100 },
+    { name: "Bacon", price: 10, quantity: 130 },
+    { name: "Grädde", price: 4, quantity: 125 },
+    { name: "Ägg", price: 4, quantity: 65 },
+    { name: "Parmesan", price: 13, quantity: 50 },
+    { name: "Svartpeppar", price: 1, quantity: 4 },
+    { name: "Salt", price: 1, quantity: 4 }
   ],
   "Biff med rödvinssås och rostad potatis": [
-    { name: "Biff", price: 80, quantity: 2 },
-    { name: "Rödvinssås", price: 20, quantity: 1 },
-    { name: "Potatis", price: 10, quantity: 4 },
-    { name: "Vitlök", price: 5, quantity: 2 },
-    { name: "Salt", price: 1, quantity: 1 },
-    { name: "Peppar", price: 2, quantity: 1 },
-    { name: "Smör", price: 10, quantity: 1 },
-    { name: "Timjan", price: 3, quantity: 1 }
+    { name: "Biff", price: 43, quantity: 200 },
+    { name: "Rödvinssås", price: 10, quantity: 100 },
+    { name: "Potatis", price: 4, quantity: 200 },
+    { name: "Vitlök", price: 1, quantity: 15 },
+    { name: "Salt", price: 1, quantity: 4 },
+    { name: "Peppar", price: 1, quantity: 4 },
+    { name: "Smör", price: 7, quantity: 60 },
+    { name: "Timjan", price: 3, quantity: 4 }
   ],
-  "Kokt potatis med gräddsås, köttbullar och lingonsylt": [
-    { name: "Potatis", price: 10, quantity: 4 },
-    { name: "Gräddsås", price: 20, quantity: 1 },
-    { name: "Lingonsylt", price: 15, quantity: 1 },
-    { name: "Salt", price: 1, quantity: 1 },
-    { name: "Peppar", price: 2, quantity: 1 },
-    { name: "Köttbullar", price: 30, quantity: 2 }
+  "Köttbullar med kokt potatis, gräddsås och lingonsylt": [
+    { name: "Potatis", price: 4, quantity: 200 },
+    { name: "Gräddsås", price: 30, quantity: 100 },
+    { name: "Lingonsylt", price: 2, quantity: 75 },
+    { name: "Salt", price: 1, quantity: 4 },
+    { name: "Peppar", price: 1, quantity: 4 },
+    { name: "Köttbullar", price: 11, quantity: 150 }
   ]
 };
 //database connection
@@ -100,8 +99,8 @@ for (const[product, ingredients] of Object.entries(products)) {
     } else {
       console.log(`Inserted product: ${product} with total price ${totalPrice}`);
     }
-  })
-}
+  });
+};
 
 const uniqueIngredients = new Map();
   //looping through all ingredients in the products, not saving any duplicates

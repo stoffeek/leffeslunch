@@ -3,63 +3,114 @@ import './Ordering.css';
 import { useNavigate } from 'react-router-dom';
 import leffeslogo from './img/leffelogo.png';
 
-const ingredientsMap = {
-  kycklingTikka: { chicken: 200, currySauce: 100, rice: 150 },
-  fläskfile: { pork: 200, cream: 100, potatoes: 150 },
-  kycklingCouscous: { chicken: 200, couscous: 100, feta: 50 },
-  lax: { salmon: 200, lemon: 50, dill: 20 },
-  carbonara: { pasta: 100, bacon: 150, cream: 100 },
-  biff: { beef: 200, redWine: 50, potatoes: 150 },
-  köttbullar: { beef: 150, breadcrumbs: 50, potatoes: 150 },
-  lasagne: { pasta: 200, cheese: 100, tomatoSauce: 100 },
-  rödbetsbiffar: { beets: 150, potatoes: 150, cream: 100 },
-  padThai: { riceNoodles: 150, tofu: 100, peanuts: 50 },
-  svamprisotto: { rice: 200, mushrooms: 150, broth: 100 },
-  curry: { vegetables: 200, coconutMilk: 100, spices: 20 },
-  falafel: { chickpeas: 150, tahini: 50, salad: 100 },
-  quinoasallad: { quinoa: 200, halloumi: 100, vegetables: 100 },
+const API_URL = 'http://localhost:5001/api';
+
+export const fetchProducts = async () => {
+  try {
+    const response = await fetch(`${API_URL}/products`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch products: ' + response.statusText);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching products: ', error);
+    throw error;
+  }
+};
+
+export const fetchIngredients = async () => {
+  try {
+    const response = await fetch(`${API_URL}/ingredients`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch ingredients: ' + response.statusText);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching ingredients: ', error);
+    throw error;
+  }
+};
+
+export const fetchRecipe = async () => {
+  try {
+    const response = await fetch(`${API_URL}/recipe`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch recipes: ' + response.statusText);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching recipes: ', error);
+    throw error;
+  }
+};
+
+export const createIngredientsMap = async (products, ingredients, recipes) => {
+  const ingredientsMap = {};
+
+  products.forEach((product) => {
+    const productRecipes = recipes.filter(recipe => recipe.product_id === product.id);
+    ingredientsMap[product.name] = {};
+
+    productRecipes.forEach((recipe) => {
+      const ingredient = ingredients.find(ingredient => ingredient.id === recipe.ingredient_id);
+      if (ingredient) {
+        // Use the quantity from the ingredients table
+        ingredientsMap[product.name][ingredient.name] = ingredient.quantity; // Store quantity from ingredients
+      }
+    });
+  });
+
+  return ingredientsMap;
 };
 
 function Calculator() {
   const [totalIngredients, setTotalIngredients] = useState({});
-  const [progress, setProgress] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const [isFading, setIsFading] = useState(false);
+  const [ingredientsMap, setIngredientsMap] = useState({});
+  const [products, setProducts] = useState([]); // State for all products
+  const [ingredients, setIngredients] = useState([]); // State for all ingredients
+  const [recipes, setRecipes] = useState([]); // State for all recipes
+  const navigate = useNavigate();
 
   useEffect(() => {
-    let timeout;
-    if (isVisible && progress < 100) {
-      const id = setInterval(() => {
-        setProgress((prev) => {
-          if (prev >= 100) {
-            clearInterval(id);
-            return 100; 
-          }
-          return prev + 1.9;
-        });
-      }, 50);
+    const fetchData = async () => {
+      try {
+        const [fetchedProducts, fetchedIngredients, fetchedRecipes] = await Promise.all([
+          fetchProducts(),
+          fetchIngredients(),
+          fetchRecipe(),
+        ]);
 
-   
-    
-      return () => clearInterval(id); 
-    } else if (progress >= 100) {
-      setIsFading(true);
-      timeout = setTimeout(() => {
-        setIsVisible(false);
-        setIsFading(false);
-        setProgress(0);
-      }, 2000); 
-    }
+        setProducts(fetchedProducts);
+        setIngredients(fetchedIngredients);
+        setRecipes(fetchedRecipes);
 
-    return () => clearTimeout(timeout); 
-  }, [isVisible, progress]);
+        const map = await createIngredientsMap(fetchedProducts, fetchedIngredients, fetchedRecipes);
+        setIngredientsMap(map);
+      } catch (error) {
+        console.error('Error fetching data: ', error);
+      }
+    };
 
-  const handleStartProgress = () => {
-    setIsVisible(true); 
-    setProgress(0); 
-    setIsFading(false); 
-  };
-  const navigate = useNavigate();
+    fetchData();
+  }, []);
 
   const handleHistory = () => {
     navigate('/leffes/history');
@@ -67,148 +118,82 @@ function Calculator() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    const newMeatDishes = {
-      kycklingTikka: parseInt(e.target.kycklingTikka.value) || 0,
-      fläskfile: parseInt(e.target.fläskfile.value) || 0,
-      kycklingCouscous: parseInt(e.target.kycklingCouscous.value) || 0,
-      lax: parseInt(e.target.lax.value) || 0,
-      carbonara: parseInt(e.target.carbonara.value) || 0,
-      biff: parseInt(e.target.biff.value) || 0,
-      köttbullar: parseInt(e.target.köttbullar.value) || 0,
-    };
-    
-    const newVegetarianDishes = {
-      lasagne: parseInt(e.target.lasagne.value) || 0,
-      rödbetsbiffar: parseInt(e.target.rödbetsbiffar.value) || 0,
-      padThai: parseInt(e.target.padThai.value) || 0,
-      svamprisotto: parseInt(e.target.svamprisotto.value) || 0,
-      curry: parseInt(e.target.curry.value) || 0,
-      falafel: parseInt(e.target.falafel.value) || 0,
-      quinoasallad: parseInt(e.target.quinoasallad.value) || 0,
-    };
 
-    const calculatedIngredients = {}; 
+    const newDishes = {};
+
+    // Get the number of selected dishes from the form
+    products.forEach((product) => {
+      newDishes[product.name] = parseInt(e.target[product.name].value, 10) || 0;
+    });
+
+    const calculatedIngredients = {};
     const addIngredients = (dishes) => {
       for (const [dish, quantity] of Object.entries(dishes)) {
         if (quantity > 0) {
-          const ingredients = ingredientsMap[dish];
-          for (const [ingredient, amount] of Object.entries(ingredients)) {
-            calculatedIngredients[ingredient] = (calculatedIngredients[ingredient] || 0) + amount * quantity;
+          const ingredients = ingredientsMap[dish]; // Get the ingredient map for the dish
+          if (ingredients) {
+            for (const [ingredient, amount] of Object.entries(ingredients)) {
+              const ingredientQuantity = amount || 0; // Ensure amount is a number
+              calculatedIngredients[ingredient] = (calculatedIngredients[ingredient] || 0) + ingredientQuantity * quantity;
+            }
+          } else {
+            console.error(`No ingredients found for dish: ${dish}`);
           }
         }
       }
     };
 
-    addIngredients(newMeatDishes);
-    addIngredients(newVegetarianDishes);
+    addIngredients(newDishes);
+    console.log('Calculated Ingredients:', calculatedIngredients); // Debugging log
     setTotalIngredients(calculatedIngredients);
   };
 
-  return ( 
+  return (
     <div className="MainContent">
-  <div className="Header">
-    <img src={leffeslogo} alt="Leffes Logo" />
-  </div>
-  
-  <button className='HistoryButton' onClick={handleHistory}>Order History</button>
-
-  <form onSubmit={handleSubmit}>
-    <div className="DishContainer">
-      <div className='Meat' id="meat">
-        <h2>Meat Dishes</h2>
-        <div className='Input1'>
-          <h3>Kyckling Tikka Masala</h3>
-          <input type="number" name="kycklingTikka" />
-        </div>
-        <div className='Input2'>
-          <h3>Fläskfilé med gräddsås och potatisgratäng</h3>
-          <input type="number" name="fläskfile" />
-        </div>
-        <div className='Input3'>
-          <h3>Kyckling med couscous och fetaost</h3>
-          <input type="number" name="kycklingCouscous" />
-        </div>
-        <div className='Input4'>
-          <h3>Lax i ugn med citron och dill</h3>
-          <input type="number" name="lax" />
-        </div>
-        <div className='Input5'>
-          <h3>Spaghetti Carbonara</h3>
-          <input type="number" name="carbonara" />
-        </div>
-        <div className='Input6'>
-          <h3>Biff med rödvinssås och rostad potatis</h3>
-          <input type="number" name="biff" />
-        </div>
-        <div className='Input7'>
-          <h3>Köttbullar med potatis</h3>
-          <input type="number" name="köttbullar" />
-        </div>
+      <div className="Header">
+        <img src={leffeslogo} alt="Leffes Logo" />
       </div>
 
-      <div className='Vegetarian' id="vegetarian">
-        <h2>Vegetarian Dishes</h2>
-        <div className='Input1'>
-          <h3>Vegetarisk lasagne</h3>
-          <input type="number" name="lasagne" />
-        </div>
-        <div className='Input2'>
-          <h3>Rödbetsbiffar med potatismos</h3>
-          <input type="number" name="rödbetsbiffar" />
-        </div>
-        <div className='Input3'>
-          <h3>Vegetarisk Pad Thai</h3>
-          <input type="number" name="padThai" />
-        </div>
-        <div className='Input4'>
-          <h3>Svamprisotto</h3>
-          <input type="number" name="svamprisotto" />
-        </div>
-        <div className='Input5'>
-          <h3>Grönsakscurry med kokosmjölk</h3>
-          <input type="number" name="curry" />
-        </div>
-        <div className='Input6'>
-          <h3>Falafel med bulgur och tahinisås</h3>
-          <input type="number" name="falafel" />
-        </div>
-        <div className='Input7'>
-          <h3>Quinoasallad med grillad halloumi</h3>
-          <input type="number" name="quinoasallad" />
-        </div>
-      </div>
+      <button className='HistoryButton' onClick={handleHistory}>Order History</button>
 
-      <div className='Results'>
-        <h2>Total Ingredients Required:</h2>
-        <ul>
-          {Object.entries(totalIngredients).map(([ingredient, amount]) => {
-            let displayAmount;
+      <form onSubmit={handleSubmit}>
+        <div className="DishContainer">
+          <div className='Dishes' id="dishes">
+            <h2>Available Dishes</h2>
+            {products.map((product) => (
+              <div key={product.name}>
+                <label htmlFor={product.name}>{product.name}</label>
+                <input type="number" id={product.name} name={product.name} min="0" />
+              </div>
+            ))}
+          </div>
 
-            if (amount >= 1000000) {
-              displayAmount = (amount / 1000000).toFixed(1) + " tonne"; 
-            } else if (amount >= 1000) {
-              displayAmount = (amount / 1000).toFixed(1) + " kilo";
-            } else {
-              displayAmount = amount + " gram";
-            }
+          <div className='Results'>
+            <h2>Total Ingredients Required</h2>
+            <ul>
+              {Object.entries(totalIngredients).map(([ingredient, amount]) => {
+                let displayAmount;
 
-            return <li key={ingredient}>{ingredient}: {displayAmount}</li>;
-          })}
-        </ul>
-      </div>
+                if (amount >= 1000000) {
+                  displayAmount = (amount / 1000000).toFixed(1) + " tonne"; 
+                } else if (amount >= 1000) {
+                  displayAmount = (amount / 1000).toFixed(1) + " kilo";
+                } else {
+                  displayAmount = amount + " gram";
+                }
+
+                return <li key={ingredient}>{ingredient}: {displayAmount}</li>;
+              })}
+            </ul>
+          </div>
+        </div>
+        <div className="ButtonContainer">
+          <button className='SubmitButton'>Submit</button>
+          <button type="button" className='BuyButton'>Buy</button>
+        </div>
+      </form>
     </div>
-    <div className="ButtonContainer">
-  <button className='SubmitButton'>Submit</button>
-  <button className='BuyButton'>Buy</button>
-</div>
-  </form>
-</div>
-
-
   );
-  
-  
 }
 
 export default Calculator;

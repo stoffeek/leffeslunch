@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './img/pelican_header.png'; 
 import '../pages/Header.css';
+import { Link } from 'react-router-dom';
 
 function Header() {
   return (
@@ -11,13 +12,13 @@ function Header() {
         </div>
         <ul className="nav-list">
           <li className="nav-item">
-            <a href="/" className="link">HOME</a>
+            <Link to="/" className="link">HOME</Link>
           </li>
           <li className="nav-item">
-            <a href="/about" className="link">ABOUT</a>
+            <Link to="/about" className="link">ABOUT</Link>
           </li>
           <li className="nav-item">
-            <a href="/contact" className="link">CONTACT</a>
+            <Link to="/contact" className="link">CONTACT</Link>
           </li>
         </ul>
       </nav>
