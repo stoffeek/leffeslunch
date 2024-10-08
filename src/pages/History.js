@@ -1,13 +1,15 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import './History.css'; // Ensure you import your CSS file
+import React, { useState } from 'react'; // Import useState
+import { useNavigate } from 'react-router-dom';
+import './History.css'; 
 import leffesLogo from './img/leffelogo.png';
 import myAccount from './img/my_account.png';
+import Modal from './Modal'; // Import the Modal component
 
 const OrderHistory = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate(); 
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+  const [selectedOrder, setSelectedOrder] = useState(null); // State to hold selected order details
 
-  // Sample order data (this could come from your database)
   const orders = [
     {
       id: 1,
@@ -25,27 +27,32 @@ const OrderHistory = () => {
     },
   ];
 
-  const handleViewDetails = (orderId) => {
-    // Implement the logic to show order details in a popup/modal
-    alert(`Viewing details for order ID: ${orderId}`);
+  const handleViewDetails = (order) => {
+    setSelectedOrder(order); // Set selected order details
+    setIsModalOpen(true); // Open the modal
   };
 
   const handleNewOrder = () => {
-    navigate('/leffes/ordering'); // Redirect to the ordering page
+    navigate('/leffes/ordering'); 
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); // Close the modal
+    setSelectedOrder(null); // Reset selected order
   };
 
   return (
     <div className="OrderHistoryContainer">
       <img src={myAccount} alt="My Account" className="MyAcc" />
       <div className="HeaderRow">
-    <img src={leffesLogo} alt="Leffes Lunchlådor Logo" className="LeffesLogo" />
-</div>
-<div className="OrderRow">
-    <h2 className="OrderHistory">ORDER HISTORY</h2>
-    <button className="NewOrderButton" onClick={handleNewOrder}>
-        + New Order
-    </button>
-</div>
+        <img src={leffesLogo} alt="Leffes Lunchlådor Logo" className="LeffesLogo" />
+      </div>
+      <div className="OrderRow">
+        <h2 className="OrderHistory">ORDER HISTORY</h2>
+        <button className="NewOrderButton" onClick={handleNewOrder}>
+          + New Order
+        </button>
+      </div>
       <table className="OrderTable">
         <thead>
           <tr>
@@ -68,7 +75,7 @@ const OrderHistory = () => {
               <td>
                 <button
                   className="ViewDetailsButton"
-                  onClick={() => handleViewDetails(order.id)}
+                  onClick={() => handleViewDetails(order)} // Pass the whole order object
                 >
                   View Details
                 </button>
@@ -77,6 +84,11 @@ const OrderHistory = () => {
           ))}
         </tbody>
       </table>
+      <Modal 
+        isOpen={isModalOpen} 
+        onClose={closeModal} 
+        orderDetails={selectedOrder} 
+      />
     </div>
   );
 };
