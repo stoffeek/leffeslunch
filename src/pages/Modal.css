@@ -5,35 +5,93 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000; /* Ensures modal is on top */
-  }
-  
-  .modal-content {
-    background-color: white;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 1300px; 
+    max-width: 90%;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 400px; /* Adjust width as needed */
-  }
-  
-  .receipt {
-    margin-bottom: 20px;
-  }
-  
-  .close-button {
-    padding: 10px 15px;
-    background-color: #007BFF; /* Bootstrap blue */
+    font-family: 'Roboto', sans-serif;
+}
+
+.receipt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pelilogo { 
+    width: 380px; 
+    height: auto; 
+    margin-right: 20px; 
+}
+
+.receipt { 
+    width: 380px; 
+    height: auto; 
+    display: block;
+    margin: 0 auto; 
+    margin-top: 100px;
+    margin-bottom: 30px; 
+}
+
+.leffLogo { 
+    width: 250px; 
+    height: auto; 
+    margin-left: 450px; 
+}
+
+.close-button {
+    background-color: #ff4757;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
-  }
-  
-  .close-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-  }
-  
+    padding: 10px 15px;
+    font-size: 16px;
+    margin-left: 1300px; 
+}
+
+.close-button:hover {
+    background-color: #f88899;
+}
+
+.receipt-body {
+    margin-top: 20px;
+}
+
+.receipt-details {
+    margin-bottom: 15px;
+}
+
+.receipt-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.receipt-table th,
+.receipt-table td {
+    border: 1px solid #27466e;
+    text-align: left;
+    padding: 8px;
+}
+
+.receipt-table th {
+    background-color: #c6e6fc;
+}
+
+.total {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: right;
+    margin-top: 10px;
+}
