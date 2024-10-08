@@ -1,16 +1,15 @@
 import React from 'react';
-import './Modal.css'; // Ensure your CSS file is imported
+import './Modal.css'; 
 import pelilogo from './img/full_logo.png'; 
 import receipt from './img/receipt_h1.png';
 import lefflogo from './img/leffelogo.png';
 
 const Modal = ({ orderDetails, onClose }) => {
-    // Check if orderDetails is null or undefined
+    
     if (!orderDetails) {
-        return null; // Return nothing if there's no order details
+        return null; 
     }
 
-    // Safely extract items from orderDetails
     const { id, date, name, items = [], total } = orderDetails;
 
     return (
