@@ -10,6 +10,9 @@
     align-items: center;
     justify-content: center;
     z-index: 1000;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+    animation-delay: 0.1s;
 }
 
 .modal-content {
