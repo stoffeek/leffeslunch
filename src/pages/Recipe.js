@@ -32,12 +32,11 @@ const RecipeBook = () => {
       title: 'Kyckling Curry',
       ingredients: ['Kyckling', 'Curry', 'Kokosmjölk', 'Lök', 'Vitlök', 'Ingefära']
     },
-    // Lägg till fler recept här
   ];
 
   return (
     <div className="recipe-book">
-      <h1>Min Receptbok</h1>
+      <h1>Receptbok</h1>
       {recipes.map((recipe, index) => (
         <Recipe key={index} title={recipe.title} ingredients={recipe.ingredients} />
       ))}
