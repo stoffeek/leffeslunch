@@ -6,6 +6,7 @@ import Ordering from './pages/Ordering';
 import History from './pages/History'; 
 import Contact from './pages/Contact';
 import Recipe from "./pages/Recipe";
+import Sales from "./pages/Sales";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/leffes/history" element={<History />} /> 
           <Route path ="/contact" element={<Contact />} />
           <Route path="/leffes/recipe" element={<Recipe />} /> 
+          <Route path ="leffes/sales" element={<Sales />} />
 
         </Routes>
       </div>

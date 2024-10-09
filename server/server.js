@@ -66,6 +66,24 @@ app.get('/api/sales', (req, res) => {
   });
 });
 
+app.put('/api/products/update', (req, res) => {
+  const products = req.body.products;
+
+  db.serialize(() => {
+    db.run("BEGIN TRANSACTION");
+    try {
+      products.forEach(product => {
+          db.run('UPDATE products SET current_stock = ? WHERE id = ?', [product.current_stock, product.id]);
+      });
+      db.run("COMMIT");
+      res.status(200).json({ message: 'Product stock updated successfully' });
+    } catch (error){
+      db.run("ROLLBACK");
+      res.status(500).json ({ error: 'Error updating product stock' });
+    }
+  });
+});
+
 // Starta servern
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
