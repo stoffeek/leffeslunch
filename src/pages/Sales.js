@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import './Sales.css';
 import { useNavigate } from "react-router-dom";
 import { fetchProducts } from "./Ordering";
-import { application } from "express";
 
 const API_URL = 'http://localhost:5001/api'
 
@@ -31,7 +30,10 @@ const Sales = () => {
             const randomSoldAmount = Math.floor(Math.random() * product.current_stock);
             const newStock = product.current_stock - randomSoldAmount;
 
-            return { ...product, current_stock: newStock};
+            const totalPrice = randomSoldAmount * product.price;
+            const profit = totalPrice;
+
+            return { ...product, current_stock: newStock, randomSoldAmount, totalPrice, profit };
         });
 
         try {
@@ -46,6 +48,30 @@ const Sales = () => {
             if (!response.ok) throw new Error('Error updating product stock');
             const result = await response.json();
             console.log(result.message);
+
+            for (const product of updatedProducts) {
+                if (product.randomSoldAmount > 0) {
+                    const saleResponse = await fetch(`${API_URL}/sales`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            total_price: product.totalPrice,
+                            profit: product.profit,
+                            date: new Date().toISOString()
+                        }),
+                    });
+
+                    if(!saleResponse.ok) {
+                        const errorDetails = await saleResponse.json();
+                        console.error('Error recording sale: ', errorDetails);
+                    } else {
+                        const saleResult = await saleResponse.json();
+                        console.log('Sale recorded successfully: ', saleResult);
+                    }
+                }
+            }
             setProducts(updatedProducts);
         } catch (error){
             console.error('Error: ', error)
@@ -74,7 +100,7 @@ const Sales = () => {
                     ))}
                 </tbody>
             </table>
-            <button onClick={handleSellProducts}></button>
+            <button onClick={handleSellProducts}>Click to make one week pass</button>
         </div>
     )
 }

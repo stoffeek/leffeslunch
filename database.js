@@ -35,7 +35,7 @@ const db = new sqlite3.Database('leffes.db', (err) => {
         total_price INTEGER NOT NULL,
         profit INTEGER NOT NULL,
         date DATETIME,
-        leftovers_sold INTEGER NOT NULL
+        leftovers_sold INTEGER
       );`, (err) => {
         if (err) {
           console.error('Error creating sales table: ' + err.message);

@@ -66,6 +66,7 @@ app.get('/api/sales', (req, res) => {
   });
 });
 
+
 app.put('/api/products/update', (req, res) => {
   const products = req.body.products;
 
@@ -82,6 +83,21 @@ app.put('/api/products/update', (req, res) => {
       res.status(500).json ({ error: 'Error updating product stock' });
     }
   });
+});
+
+app.post('/api/sales', (req, res) => {
+    const salesData = req.body;
+
+    const { total_price, profit, date } = salesData;
+
+    const insertQuery = `INSERT INTO sales (total_price, profit, date) VALUES (?, ?, ?)`;
+    db.run(insertQuery, [total_price, profit, date], function (err) {
+      if (err) {
+        console.error("error inserting sale", err)
+        return res.status(500).json ({ error: err.message });
+      }
+      res.status(201).json({ message: 'Sale recorded successfully', id: this.lastID });
+    });
 });
 
 // Starta servern
