@@ -1,14 +1,14 @@
-import React, { useState } from 'react'; // Import useState
+import React, { useState } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import './History.css'; 
 import leffesLogo from './img/leffelogo.png';
 import myAccount from './img/my_account.png';
-import Modal from './Modal'; // Import the Modal component
+import Modal from './Modal'; 
 
 const OrderHistory = () => {
   const navigate = useNavigate(); 
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
-  const [selectedOrder, setSelectedOrder] = useState(null); // State to hold selected order details
+  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [selectedOrder, setSelectedOrder] = useState(null); 
 
   const orders = [
     {
@@ -28,8 +28,8 @@ const OrderHistory = () => {
   ];
 
   const handleViewDetails = (order) => {
-    setSelectedOrder(order); // Set selected order details
-    setIsModalOpen(true); // Open the modal
+    setSelectedOrder(order); 
+    setIsModalOpen(true); 
   };
 
   const handleNewOrder = () => {
@@ -37,8 +37,8 @@ const OrderHistory = () => {
   };
 
   const closeModal = () => {
-    setIsModalOpen(false); // Close the modal
-    setSelectedOrder(null); // Reset selected order
+    setIsModalOpen(false); 
+    setSelectedOrder(null); 
   };
 
   return (
@@ -75,7 +75,7 @@ const OrderHistory = () => {
               <td>
                 <button
                   className="ViewDetailsButton"
-                  onClick={() => handleViewDetails(order)} // Pass the whole order object
+                  onClick={() => handleViewDetails(order)} 
                 >
                   View Details
                 </button>
