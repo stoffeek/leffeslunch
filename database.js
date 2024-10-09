@@ -42,13 +42,11 @@ const db = new sqlite3.Database('leffes.db', (err) => {
 
       db.run(`CREATE TABLE IF NOT EXISTS orders(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        receipt INTEGER NOT NULL,
-        price INTEGER NOT NULL,
-        date DATETIME,
-        leftover_quantity INTEGER NOT NULL,
-        sales_id INTEGER NOT NULL,
-        FOREIGN KEY (sales_id) REFERENCES sales(id)
-      );`, (err) => {
+        date DATETIME DEFAULT CURRENT_TIMESTAMP,
+        order_id INTEGER,
+        ingredient_name TEXT NOT NULL,
+        quantity INTEGER NOT NULL
+          );`, (err) => {
         if (err) {
           console.error('Error creating orders table: ' + err.message);
         }

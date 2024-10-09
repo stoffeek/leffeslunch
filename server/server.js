@@ -66,48 +66,42 @@ app.post('/api/orders', (req, res) => {
     return res.status(400).json({ error: 'No ingredients provided in the order' });
   }
 
-  const total_price = calculateTotalPrice(totalIngredients);
-
-  db.run(
-    `INSERT INTO sales (total_price, profit, date, leftovers_sold) VALUES (?, ?, ?, ?)`,
-    [total_price, total_price * 0.2, new Date().toISOString(), 0],
-    function (err) {
-      if (err) {
-        return res.status(500).json({ error: 'Error creating sale: ' + err.message });
-      }
-
-      const saleId = this.lastID;
-      db.run(
-        `INSERT INTO orders (receipt, price, date, leftover_quantity, sales_id) VALUES (?, ?, ?, ?, ?)`,
-        [saleId, total_price, new Date().toISOString(), 0, saleId],
-        function (err) {
-          if (err) {
-            return res.status(500).json({ error: 'Error creating order: ' + err.message });
-          }
-
-          const orderId = this.lastID;
-
-          
-          const orderItemsPromises = Object.entries(totalIngredients).map(([ingredient, quantity]) => {
-            return new Promise((resolve, reject) => {
-              db.get(`SELECT id FROM ingredients WHERE name = ?`, [ingredient], (err, row) => {
-                if (err || !row) return reject('Ingredient not found');
-                db.run(`INSERT INTO order_items (order_id, product_id) VALUES (?, ?)`, [orderId, row.id], (err) => {
-                  if (err) return reject('Error inserting order item');
-                  resolve();
-                });
-              });
-            });
-          });
-
-          Promise.all(orderItemsPromises)
-            .then(() => res.status(200).json({ message: 'Order placed successfully!' }))
-            .catch((error) => res.status(500).json({ error }));
-        }
-      );
+  // Get the current maximum order_id from the orders table
+  db.get(`SELECT MAX(order_id) as maxOrderId FROM orders`, (err, row) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error retrieving maximum order_id: ' + err.message });
     }
-  );
+
+    const newOrderId = (row.maxOrderId || 0) + 1; // If no orders exist yet, start with 1
+
+    // Insert each ingredient into the orders table with the new order_id
+    const insertOrderPromises = Object.entries(totalIngredients).map(([ingredient, quantity]) => {
+      return new Promise((resolve, reject) => {
+        db.run(
+          `INSERT INTO orders (order_id, ingredient_name, quantity, date) VALUES (?, ?, ?, ?)`,
+          [newOrderId, ingredient, quantity, new Date().toISOString()],
+          function (err) {
+            if (err) {
+              console.error('Error inserting into orders table:', err); // Log the error
+              reject('Error inserting into orders table: ' + err.message);
+            } else {
+              resolve();
+            }
+          }
+        );
+      });
+    });
+
+    // Wait for all inserts to finish
+    Promise.all(insertOrderPromises)
+      .then(() => res.status(200).json({ message: 'Order placed successfully!', order_id: newOrderId }))
+      .catch((error) => {
+        console.error('Error placing order:', error); // Log the error
+        res.status(500).json({ error });
+      });
+  });
 });
+
 
 // Kalkylering av totalpriset baserat på ingrediensernas pris och kvantitet
 const calculateTotalPrice = (totalIngredients) => {
