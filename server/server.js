@@ -59,6 +59,23 @@ app.get('/api/recipe', (req, res) => {
   });
 });
 
+// Hämta ordrar från databasen baserat på order_id
+app.get('/api/orders/:id', (req, res) => {
+  const orderId = req.params.id;
+  const ordersQuery = 'SELECT * FROM orders WHERE order_id = ?';
+  
+  db.all(ordersQuery, [orderId], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+    res.json(rows);
+  });
+});
+
+
 // Lägg till ny order
 app.post('/api/orders', (req, res) => {
   const { totalIngredients } = req.body;
