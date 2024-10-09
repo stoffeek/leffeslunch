@@ -45,6 +45,7 @@ const db = new sqlite3.Database('leffes.db', (err) => {
         receipt INTEGER NOT NULL,
         price INTEGER NOT NULL,
         date DATETIME,
+        current_stock INTEGER,
         leftover_quantity INTEGER NOT NULL,
         sales_id INTEGER NOT NULL,
         FOREIGN KEY (sales_id) REFERENCES sales(id)
