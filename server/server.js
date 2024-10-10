@@ -66,6 +66,60 @@ app.get('/api/sales', (req, res) => {
   });
 });
 
+app.get('/api/products/:productId/ingredients', (req, res) => {
+  const productId = req.params.productId;
+
+  const joinQuery = `
+    select i.id, i.name, i.price, r.quantity_needed
+    from ingredients i
+    JOIN recipe r ON i.id = r.ingredient_id
+    WHERE r.product_id = ?
+  `;
+
+  db.all(joinQuery, [productId], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(rows);
+  });
+});
+
+
+app.put('/api/products/update', (req, res) => {
+  const products = req.body.products;
+
+  db.serialize(() => {
+    db.run("BEGIN TRANSACTION");
+    try {
+      products.forEach(product => {
+          db.run('UPDATE products SET current_stock = ? WHERE id = ?', [product.current_stock, product.id]);
+      });
+      db.run("COMMIT");
+      res.status(200).json({ message: 'Product stock updated successfully' });
+    } catch (error){
+      db.run("ROLLBACK");
+      res.status(500).json ({ error: 'Error updating product stock' });
+    }
+  });
+});
+
+app.post('/api/sales', (req, res) => {
+    const salesData = req.body;
+
+    const { total_price, profit, date } = salesData;
+
+    const insertQuery = `INSERT INTO sales (total_price, profit, date) VALUES (?, ?, ?)`;
+    db.run(insertQuery, [total_price, profit, date], function (err) {
+      if (err) {
+        console.error("error inserting sale", err)
+        return res.status(500).json ({ error: err.message });
+      }
+      res.status(201).json({ message: 'Sale recorded successfully', id: this.lastID });
+    });
+});
+
+
+
 // Starta servern
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
