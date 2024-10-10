@@ -66,6 +66,24 @@ app.get('/api/sales', (req, res) => {
   });
 });
 
+app.get('/api/products/:productId/ingredients', (req, res) => {
+  const productId = req.params.productId;
+
+  const joinQuery = `
+    select i.id, i.name, i.price, r.quantity_needed
+    from ingredients i
+    JOIN recipe r ON i.id = r.ingredient_id
+    WHERE r.product_id = ?
+  `;
+
+  db.all(joinQuery, [productId], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(rows);
+  });
+});
+
 
 app.put('/api/products/update', (req, res) => {
   const products = req.body.products;
@@ -99,6 +117,8 @@ app.post('/api/sales', (req, res) => {
       res.status(201).json({ message: 'Sale recorded successfully', id: this.lastID });
     });
 });
+
+
 
 // Starta servern
 app.listen(PORT, () => {

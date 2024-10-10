@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import './Sales.css';
-import { useNavigate } from "react-router-dom";
 import { fetchProducts } from "./Ordering";
 
 const API_URL = 'http://localhost:5001/api'
@@ -10,10 +9,27 @@ const Sales = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const fetchIngredients = async (productId) => {
+        try {
+            const response = await fetch(`${API_URL}/products/${productId}/ingredients`);
+            if (!response.ok) throw new Error('Error fetching ingredients');
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error fetching ingredients: ', error)
+            throw error;
+        }
+    }
+
     const loadProducts = async () => {
         try {
             const data = await fetchProducts();
-            setProducts(data);
+            const productsWithIngredients = await Promise.all(data.map(async (product) => {
+                const ingredients = await fetchIngredients(product.id);
+                const totalIngredientCost = ingredients.reduce((sum, ingredient) => sum + ingredient.price, 0);
+                return { ...product, totalIngredientCost };
+            }));
+            setProducts(productsWithIngredients);
         } catch (error) {
             setError(error.message);
         } finally {
@@ -31,7 +47,9 @@ const Sales = () => {
             const newStock = product.current_stock - randomSoldAmount;
 
             const totalPrice = randomSoldAmount * product.price;
-            const profit = totalPrice;
+
+            const ingredientCost = randomSoldAmount * product.totalIngredientCost;
+            const profit = totalPrice - ingredientCost;
 
             return { ...product, current_stock: newStock, randomSoldAmount, totalPrice, profit };
         });
