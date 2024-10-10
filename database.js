@@ -10,7 +10,9 @@ const db = new sqlite3.Database('leffes.db', (err) => {
       db.run(`CREATE TABLE IF NOT EXISTS products(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
-        price INTEGER NOT NULL
+        price INTEGER NOT NULL,
+        current_stock INTEGER,
+        leftover_quantity INTEGER
       );`, (err) => {
         if (err) {
           console.error('Error creating products table: ' + err.message);
@@ -33,7 +35,7 @@ const db = new sqlite3.Database('leffes.db', (err) => {
         total_price INTEGER NOT NULL,
         profit INTEGER NOT NULL,
         date DATETIME,
-        leftovers_sold INTEGER NOT NULL
+        leftovers_sold INTEGER
       );`, (err) => {
         if (err) {
           console.error('Error creating sales table: ' + err.message);
@@ -47,6 +49,7 @@ const db = new sqlite3.Database('leffes.db', (err) => {
         ingredient_name TEXT NOT NULL,
         quantity INTEGER NOT NULL
           );`, (err) => {
+
         if (err) {
           console.error('Error creating orders table: ' + err.message);
         }

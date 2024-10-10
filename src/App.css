@@ -39,3 +39,8 @@
     transform: scale(1); /* Back to normal size */
   }
 }
+
+body {
+  position: relative;  
+  overflow: visible;  
+}

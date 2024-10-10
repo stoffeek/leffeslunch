@@ -1,0 +1,100 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+    animation-delay: 0.1s;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 1300px; 
+    max-width: 90%;
+    padding: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.receipt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pelilogo { 
+    width: 380px; 
+    height: auto; 
+    margin-right: 20px; 
+}
+
+.receipt { 
+    width: 380px; 
+    height: auto; 
+    display: block;
+    margin: 0 auto; 
+    margin-top: 100px;
+    margin-bottom: 30px; 
+}
+
+.leffLogo { 
+    width: 250px; 
+    height: auto; 
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.close-button {
+    background-color: #ff4757;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px 15px;
+    font-size: 16px;
+    margin-left: 1300px; 
+}
+
+.close-button:hover {
+    background-color: #f88899;
+}
+
+.receipt-body {
+    margin-top: 20px;
+}
+
+.receipt-details {
+    margin-bottom: 15px;
+}
+
+.receipt-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.receipt-table th,
+.receipt-table td {
+    border: 1px solid #27466e;
+    text-align: left;
+    padding: 8px;
+}
+
+.receipt-table th {
+    background-color: #c6e6fc;
+}
+
+.total {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: right;
+    margin-top: 10px;
+}

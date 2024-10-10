@@ -119,6 +119,10 @@ function Calculator() {
     navigate('/leffes/history');
   };
 
+  const handleSales = () => {
+    navigate('/leffes/sales');
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
   
@@ -198,6 +202,7 @@ function Calculator() {
       </div>
 
       <button className='HistoryButton' onClick={handleHistory}>Order History</button>
+      <button className='HistoryButton' onClick={handleSales}>Sales</button>
 
       <form onSubmit={handleSubmit}>
         <div className="DishContainer">

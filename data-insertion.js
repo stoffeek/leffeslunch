@@ -85,7 +85,7 @@ for (const[product, ingredients] of Object.entries(products)) {
   let totalPrice = 0;
 
   ingredients.forEach(({ price }) => {
-    totalPrice += price;
+    totalPrice += price * 2;
   });
 
     //inserting products and their ingredients
