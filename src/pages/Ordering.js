@@ -164,19 +164,29 @@ function Calculator() {
   };
   
 
-  const handleBuy = async () => {
-    console.log('Purchasing... sending data:', totalIngredients);
+  const handleBuy = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+  
+    console.log('Köper... skickar data:', totalIngredients);
     try {
       const response = await fetch(`${API_URL}/orders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ totalIngredients })
       });
-
+  
       if (response.ok) {
         const data = await response.json();
         console.log('Order placed successfully:', data);
         alert('Order placed successfully!');
+  
+        // Clear the input fields
+        const form = e.target.closest('form');
+        form.reset();
+  
+        // Clear the calculated ingredients and total price after buying
+        setTotalIngredients({});
+        setTotalPrice(0);
       } else {
         console.error('Failed to place order:', response.statusText);
       }
@@ -184,6 +194,7 @@ function Calculator() {
       console.error('Error placing order:', error);
     }
   };
+  
 
   return (
     <div className="MainContent">
