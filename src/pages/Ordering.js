@@ -36,7 +36,7 @@ export const fetchIngredients = async () => {
       throw new Error('Failed to fetch ingredients: ' + response.statusText);
     }
     const data = await response.json();
-    return data; // Ensure price is part of each ingredient object
+    return data; 
   } catch (error) {
     console.error('Error fetching ingredients: ', error);
     throw error;
@@ -85,7 +85,7 @@ export const createIngredientsMap = async (products, ingredients, recipes) => {
 
 function Calculator() {
   const [totalIngredients, setTotalIngredients] = useState({});
-  const [totalPrice, setTotalPrice] = useState(0); // State to hold the total price
+  const [totalPrice, setTotalPrice] = useState(0); 
   const [ingredientsMap, setIngredientsMap] = useState({});
   const [products, setProducts] = useState([]); 
   const [ingredients, setIngredients] = useState([]); 
@@ -124,30 +124,27 @@ function Calculator() {
   
     const newDishes = {};
   
-    // Create a mapping of dishes and how many of each are selected
     products.forEach((product) => {
       newDishes[product.name] = parseInt(e.target[product.name].value, 10) || 0;
     });
   
-    const calculatedIngredients = {}; // To store total amounts of each ingredient
-    let totalPrice = 0; // Initialize total price
+    const calculatedIngredients = {}; 
+    let totalPrice = 0; 
   
     const addIngredients = (dishes) => {
       for (const [dish, quantity] of Object.entries(dishes)) {
         if (quantity > 0) {
-          const ingredientsForDish = ingredientsMap[dish]; // Get ingredients for the dish
+          const ingredientsForDish = ingredientsMap[dish]; 
           if (ingredientsForDish) {
             for (const [ingredientName, amountPerDish] of Object.entries(ingredientsForDish)) {
-              const ingredientData = ingredients.find(i => i.name === ingredientName); // Get ingredient data (like price and quantity)
-              const totalAmountForDish = amountPerDish * quantity; // Total amount needed for this dish
+              const ingredientData = ingredients.find(i => i.name === ingredientName);
+              const totalAmountForDish = amountPerDish * quantity;
   
-              // Add the ingredient quantity to the calculatedIngredients object
               calculatedIngredients[ingredientName] = (calculatedIngredients[ingredientName] || 0) + totalAmountForDish;
   
-              // Calculate the price for the ingredient based on its quantity and price
               if (ingredientData && ingredientData.price && ingredientData.quantity) {
-                const pricePerUnit = ingredientData.price / ingredientData.quantity; // Price per unit (e.g., per gram)
-                totalPrice += pricePerUnit * totalAmountForDish; // Multiply by total amount needed
+                const pricePerUnit = ingredientData.price / ingredientData.quantity; 
+                totalPrice += pricePerUnit * totalAmountForDish; 
               }
             }
           } else {
@@ -160,12 +157,12 @@ function Calculator() {
     addIngredients(newDishes);
     console.log('Calculated Ingredients:', calculatedIngredients);
     setTotalIngredients(calculatedIngredients);
-    setTotalPrice(totalPrice); // Set the total price in the state
+    setTotalPrice(totalPrice); 
   };
   
 
   const handleBuy = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault();
   
     console.log('Köper... skickar data:', totalIngredients);
     try {
@@ -180,11 +177,9 @@ function Calculator() {
         console.log('Order placed successfully:', data);
         alert('Order placed successfully!');
   
-        // Clear the input fields
         const form = e.target.closest('form');
         form.reset();
   
-        // Clear the calculated ingredients and total price after buying
         setTotalIngredients({});
         setTotalPrice(0);
       } else {
