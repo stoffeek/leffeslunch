@@ -36,7 +36,7 @@ export const fetchIngredients = async () => {
       throw new Error('Failed to fetch ingredients: ' + response.statusText);
     }
     const data = await response.json();
-    return data;
+    return data; 
   } catch (error) {
     console.error('Error fetching ingredients: ', error);
     throw error;
@@ -72,8 +72,10 @@ export const createIngredientsMap = async (products, ingredients, recipes) => {
     productRecipes.forEach((recipe) => {
       const ingredient = ingredients.find(ingredient => ingredient.id === recipe.ingredient_id);
       if (ingredient) {
-        // Use the quantity from the ingredients table
-        ingredientsMap[product.name][ingredient.name] = ingredient.quantity; // Store quantity from ingredients
+        console.log(`Matched ingredient for product ${product.name}: ${ingredient.name} (Amount: ${recipe.quantity_needed})`);
+        ingredientsMap[product.name][ingredient.name] = recipe.quantity_needed;
+      } else {
+        console.error(`No ingredient found for product ${product.name} with ingredient ID ${recipe.ingredient_id}`);
       }
     });
   });
@@ -83,10 +85,11 @@ export const createIngredientsMap = async (products, ingredients, recipes) => {
 
 function Calculator() {
   const [totalIngredients, setTotalIngredients] = useState({});
+  const [totalPrice, setTotalPrice] = useState(0); 
   const [ingredientsMap, setIngredientsMap] = useState({});
-  const [products, setProducts] = useState([]); // State for all products
-  const [ingredients, setIngredients] = useState([]); // State for all ingredients
-  const [recipes, setRecipes] = useState([]); // State for all recipes
+  const [products, setProducts] = useState([]); 
+  const [ingredients, setIngredients] = useState([]); 
+  const [recipes, setRecipes] = useState([]); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -122,23 +125,31 @@ function Calculator() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     const newDishes = {};
-
-    // Get the number of selected dishes from the form
+  
     products.forEach((product) => {
       newDishes[product.name] = parseInt(e.target[product.name].value, 10) || 0;
     });
-
-    const calculatedIngredients = {};
+  
+    const calculatedIngredients = {}; 
+    let totalPrice = 0; 
+  
     const addIngredients = (dishes) => {
       for (const [dish, quantity] of Object.entries(dishes)) {
         if (quantity > 0) {
-          const ingredients = ingredientsMap[dish]; // Get the ingredient map for the dish
-          if (ingredients) {
-            for (const [ingredient, amount] of Object.entries(ingredients)) {
-              const ingredientQuantity = amount || 0; // Ensure amount is a number
-              calculatedIngredients[ingredient] = (calculatedIngredients[ingredient] || 0) + ingredientQuantity * quantity;
+          const ingredientsForDish = ingredientsMap[dish]; 
+          if (ingredientsForDish) {
+            for (const [ingredientName, amountPerDish] of Object.entries(ingredientsForDish)) {
+              const ingredientData = ingredients.find(i => i.name === ingredientName);
+              const totalAmountForDish = amountPerDish * quantity;
+  
+              calculatedIngredients[ingredientName] = (calculatedIngredients[ingredientName] || 0) + totalAmountForDish;
+  
+              if (ingredientData && ingredientData.price && ingredientData.quantity) {
+                const pricePerUnit = ingredientData.price / ingredientData.quantity; 
+                totalPrice += pricePerUnit * totalAmountForDish; 
+              }
             }
           } else {
             console.error(`No ingredients found for dish: ${dish}`);
@@ -146,11 +157,43 @@ function Calculator() {
         }
       }
     };
-
+  
     addIngredients(newDishes);
-    console.log('Calculated Ingredients:', calculatedIngredients); // Debugging log
+    console.log('Calculated Ingredients:', calculatedIngredients);
     setTotalIngredients(calculatedIngredients);
+    setTotalPrice(totalPrice); 
   };
+  
+
+  const handleBuy = async (e) => {
+    e.preventDefault();
+  
+    console.log('Köper... skickar data:', totalIngredients);
+    try {
+      const response = await fetch(`${API_URL}/orders`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ totalIngredients })
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Order placed successfully:', data);
+        alert('Order placed successfully!');
+  
+        const form = e.target.closest('form');
+        form.reset();
+  
+        setTotalIngredients({});
+        setTotalPrice(0);
+      } else {
+        console.error('Failed to place order:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error placing order:', error);
+    }
+  };
+  
 
   return (
     <div className="MainContent">
@@ -190,11 +233,14 @@ function Calculator() {
                 return <li key={ingredient}>{ingredient}: {displayAmount}</li>;
               })}
             </ul>
+            <div className='Price'>
+            <h3>Total Price: {totalPrice.toFixed(2)} SEK</h3>
+            </div>
           </div>
         </div>
         <div className="ButtonContainer">
-          <button className='SubmitButton'>Submit</button>
-          <button type="button" className='BuyButton'>Buy</button>
+          <button className='SubmitButton'>Add to Cart</button>
+          <button type="button" className='BuyButton' onClick={handleBuy}>Buy</button>
         </div>
       </form>
     </div>
