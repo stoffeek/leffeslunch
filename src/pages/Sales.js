@@ -43,8 +43,8 @@ const Sales = () => {
 
     const handleSellProducts = async () => {
         const updatedProducts = products.map(product => {
-            const randomSoldAmount = Math.floor(Math.random() * product.current_stock);
-            const newStock = product.current_stock - randomSoldAmount;
+            const randomSoldAmount = Math.floor(Math.random() * product.current_stock + 1);
+            const newStock = Math.max(0, product.current_stock - randomSoldAmount);
 
             const totalPrice = randomSoldAmount * product.price;
 
@@ -100,7 +100,7 @@ const Sales = () => {
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div>
+        <div className="table-container">
             <h1>Product List</h1>
             <table>
                 <thead>
