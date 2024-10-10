@@ -1,13 +1,13 @@
 .contact-container {
     text-align: center;
-    padding: 20px;
+    padding: 100px;
     opacity: 0;
     animation: fadeIn 1s forwards;
     animation-delay: 0.5s;
-    
   }
-  
+ 
   .team-grid {
+    padding: 100px;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
