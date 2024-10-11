@@ -7,8 +7,7 @@ import History from './pages/History';
 import Contact from './pages/Contact';
 import Recipe from "./pages/Recipe";
 import Sales from "./pages/Sales";
-
-
+import Overview from "./pages/Overview"; 
 function App() {
   return (
     <Router>
@@ -18,10 +17,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/leffes/ordering" element={<Ordering />} />
           <Route path="/leffes/history" element={<History />} /> 
-          <Route path ="/contact" element={<Contact />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/leffes/recipe" element={<Recipe />} /> 
-          <Route path ="leffes/sales" element={<Sales />} />
-
+          <Route path="/leffes/sales" element={<Sales />} />
+          <Route path="/leffes/overview" element={<Overview />} /> 
         </Routes>
       </div>
     </Router>

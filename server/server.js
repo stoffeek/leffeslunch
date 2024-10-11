@@ -170,6 +170,40 @@ app.post('/api/sales', (req, res) => {
     });
 });
 
+app.get('/api/purchases/weekly', (req, res) => {
+  const query = `
+    SELECT strftime('%Y-%W', date) AS week, SUM(quantity) AS total_purchased
+    FROM orders
+    GROUP BY week
+    ORDER BY week DESC
+  `;
+
+  db.all(query, [], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(rows);
+  });
+});
+
+// Hämta veckovisa försäljningar
+app.get('/api/sales/weekly', (req, res) => {
+  const query = `
+    SELECT strftime('%Y-%W', date) AS week, SUM(total_price) AS total_sales, SUM(profit) AS total_profit
+    FROM sales
+    GROUP BY week
+    ORDER BY week DESC
+  `;
+
+  db.all(query, [], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(rows);
+  });
+});
+
+
 
 // Starta servern
 app.listen(PORT, () => {
