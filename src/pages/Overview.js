@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import './Overview.css';
 const Overview = () => {
   const [weeklyPurchases, setWeeklyPurchases] = useState([]);
   const [weeklySales, setWeeklySales] = useState([]);
@@ -35,7 +35,7 @@ const Overview = () => {
   }, []);
 
   return (
-    <div>
+    <div className='overview'>
       <h1>Weekly Purchases and Sales</h1>
       
       <h2>Purchases per Week</h2>

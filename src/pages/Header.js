@@ -8,8 +8,8 @@ function Header() {
     <header>
       <nav>
         <div className="logo-container">
-        <Link to="/">
-          <img src={logo} alt="Logo" className="logo" />
+          <Link to="/">
+            <img src={logo} alt="Logo" className="logo" />
           </Link>
         </div>
         <ul className="nav-list">
@@ -21,6 +21,9 @@ function Header() {
           </li>
           <li className="nav-item">
             <Link to="/contact" className="link">CONTACT</Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/leffes/overview" className="link">OVERVIEW</Link> 
           </li>
         </ul>
       </nav>
