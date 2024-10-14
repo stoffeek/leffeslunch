@@ -234,7 +234,7 @@ function Calculator() {
               })}
             </ul>
             <div className='Price'>
-            <h3>Total Price: {totalPrice.toFixed(2)} SEK</h3>
+            <h3>Total Price: {totalPrice.toFixed(0)} SEK</h3>
             </div>
           </div>
         </div>
