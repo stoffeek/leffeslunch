@@ -84,6 +84,45 @@ app.get('/api/products/:productId/ingredients', (req, res) => {
   });
 });
 
+// Lägg till ny order
+app.post('/api/orders', (req, res) => {
+  const { totalIngredients } = req.body;
+  if (!totalIngredients || Object.keys(totalIngredients).length === 0) {
+    return res.status(400).json({ error: 'No ingredients provided in the order' });
+  }
+  // Get the current maximum order_id from the orders table
+  db.get(`SELECT MAX(order_id) as maxOrderId FROM orders`, (err, row) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error retrieving maximum order_id: ' + err.message });
+    }
+    const newOrderId = (row.maxOrderId || 0) + 1; // If no orders exist yet, start with 1
+    // Insert each ingredient into the orders table with the new order_id
+    const insertOrderPromises = Object.entries(totalIngredients).map(([ingredient, quantity]) => {
+      return new Promise((resolve, reject) => {
+        db.run(
+          `INSERT INTO orders (order_id, ingredient_name, quantity, date) VALUES (?, ?, ?, ?)`,
+          [newOrderId, ingredient, quantity, new Date().toISOString()],
+          function (err) {
+            if (err) {
+              console.error('Error inserting into orders table:', err); // Log the error
+              reject('Error inserting into orders table: ' + err.message);
+            } else {
+              resolve();
+            }
+          }
+        );
+      });
+    });
+    // Wait for all inserts to finish
+    Promise.all(insertOrderPromises)
+      .then(() => res.status(200).json({ message: 'Order placed successfully!', order_id: newOrderId }))
+      .catch((error) => {
+        console.error('Error placing order:', error); // Log the error
+        res.status(500).json({ error });
+      });
+  });
+});
+
 
 app.put('/api/products/update', (req, res) => {
   const products = req.body.products;
