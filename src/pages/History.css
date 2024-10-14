@@ -18,10 +18,19 @@
     animation-delay: 0.5s;
 }
 
-  .HeaderRow {
-    display: flex;
-    justify-content: center;
-    padding: 10px;
+.LeffesLogo {
+  width: 50px; /* Desired width */
+  height: auto; /* Maintain aspect ratio */
+  max-width: 100%; /* Ensures it doesn’t overflow the container */
+  display: block; /* Ensures it takes up block space */
+  margin: 0 auto; /* Center it if needed */
+}
+
+.HeaderRow {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 100%; /* Make sure it takes full width */
 }
 
 .OrderRow {
@@ -55,10 +64,6 @@
     background-color: #4e9feb; 
   }
   
-  .LeffesLogo {
-    width: 150px; 
-    height: auto;
-  }
   
   .OrderTable {
     width: 100%;
