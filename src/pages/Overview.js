@@ -44,6 +44,7 @@ const Overview = () => {
           <tr>
             <th>Week</th>
             <th>Total Purchased (Quantity)</th>
+            <th>Total spent for ingredients</th>
           </tr>
         </thead>
         <tbody>
@@ -51,6 +52,7 @@ const Overview = () => {
             <tr key={index}>
               <td>{purchase.week}</td>
               <td>{purchase.total_purchased}</td>
+              <td></td>
             </tr>
           ))}
         </tbody>

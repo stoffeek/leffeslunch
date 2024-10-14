@@ -186,6 +186,29 @@ app.get('/api/purchases/weekly', (req, res) => {
   });
 });
 
+app.get('/api/purchases/weeklyspent', (req, res) => {
+  const query = `
+    SELECT 
+      o.order_id,
+      SUM(i.price * r.quantity_needed) AS total_order_price
+    FROM 
+      orders o
+    JOIN 
+      recipe r ON r.ingredient_id = (SELECT id FROM ingredients WHERE name = o.ingredient_name)
+    JOIN 
+      ingredients i ON r.ingredient_id = i.id
+    GROUP BY 
+      o.order_id
+  `;
+
+  db.all(query, [], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message});
+    }
+    res.json(rows);
+  })
+})
+
 // Hämta veckovisa försäljningar
 app.get('/api/sales/weekly', (req, res) => {
   const query = `
