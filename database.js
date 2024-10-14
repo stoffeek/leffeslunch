@@ -11,7 +11,7 @@ const db = new sqlite3.Database('leffes.db', (err) => {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         price INTEGER NOT NULL,
-        stock INTEGER
+        current_stock INTEGER
       );`, (err) => {
         if (err) {
           console.error('Error creating products table: ' + err.message);
