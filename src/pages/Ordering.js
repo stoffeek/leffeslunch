@@ -173,7 +173,7 @@ function Calculator() {
       const response = await fetch(`${API_URL}/orders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ totalIngredients })
+        body: JSON.stringify({ totalIngredients, totalPrice }) // Include totalPrice here
       });
   
       if (response.ok) {
@@ -193,6 +193,7 @@ function Calculator() {
       console.error('Error placing order:', error);
     }
   };
+  
   
 
   return (
@@ -234,7 +235,7 @@ function Calculator() {
               })}
             </ul>
             <div className='Price'>
-            <h3>Total Price: {totalPrice.toFixed(2)} SEK</h3>
+            <h3>Total Price: {totalPrice.toFixed(0)} SEK</h3>
             </div>
           </div>
         </div>
