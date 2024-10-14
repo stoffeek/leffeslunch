@@ -193,7 +193,6 @@ function Calculator() {
       console.error('Error placing order:', error);
     }
   };
-  
 
   return (
     <div className="MainContent">

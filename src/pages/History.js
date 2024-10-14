@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './History.css'; 
 import leffesLogo from './img/leffelogo.png';
-import myAccount from './img/my_account.png';
+import orderHi from './img/order_history.png';
 import Modal from './Modal'; 
 
 const OrderHistory = () => {
@@ -43,12 +43,11 @@ const OrderHistory = () => {
 
   return (
     <div className="OrderHistoryContainer">
-      <img src={myAccount} alt="My Account" className="MyAcc" />
+      <img src={orderHi} alt="Order History" className="OrderHi" />
       <div className="HeaderRow">
         <img src={leffesLogo} alt="Leffes Lunchlådor Logo" className="LeffesLogo" />
       </div>
       <div className="OrderRow">
-        <h2 className="OrderHistory">ORDER HISTORY</h2>
         <button className="NewOrderButton" onClick={handleNewOrder}>
           + New Order
         </button>

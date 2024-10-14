@@ -7,10 +7,11 @@
     animation-delay: 0.5s;
   }
 
-  .MyAcc {
-    width: 500px;
+  .OrderHi {
+    width: 1000px;
     height: auto;
-    margin-top: 20px; 
+    margin-top: 20px;
+    margin-bottom: 70px; 
     display: block; 
     opacity: 0;
     animation: fadeIn 1s forwards;
@@ -55,16 +56,8 @@
   }
   
   .LeffesLogo {
-    width: 550px; 
-  }
-
-  .OrderHistory h2 {
-    font-size: 1.8rem; 
-    margin-bottom: 20px; 
-    text-align: left; 
-    color: #555; 
-    border-bottom: 2px solid #ccc; 
-    padding-bottom: 10px; 
+    width: 150px; 
+    height: auto;
   }
   
   .OrderTable {
@@ -81,7 +74,7 @@
   }
   
   .OrderTable th {
-    background-color: #f2f2f2;
+    background-color: #244679;
     font-weight: bold;
   }
   
