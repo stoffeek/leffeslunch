@@ -42,7 +42,7 @@ app.get('/api/ingredients', (req, res) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
-    console.log('Ingrediensdata:', rows); 
+    console.log('Ingrediensdata:', rows);
     res.json(rows);
   });
 });
@@ -54,7 +54,7 @@ app.get('/api/recipe', (req, res) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
-    console.log('Receptdata:', rows); 
+    console.log('Receptdata:', rows);
     res.json(rows);
   });
 });
@@ -63,7 +63,7 @@ app.get('/api/recipe', (req, res) => {
 app.get('/api/orders/:id', (req, res) => {
   const orderId = req.params.id;
   const ordersQuery = 'SELECT * FROM orders WHERE order_id = ?';
-  
+
   db.all(ordersQuery, [orderId], (err, rows) => {
     if (err) {
       return res.status(500).json({ error: err.message });
@@ -77,7 +77,7 @@ app.get('/api/orders/:id', (req, res) => {
 
 // Lägg till ny order
 app.post('/api/orders', (req, res) => {
-  const { totalIngredients } = req.body;
+  const { totalIngredients, totalPrice } = req.body;
   if (!totalIngredients || Object.keys(totalIngredients).length === 0) {
     return res.status(400).json({ error: 'No ingredients provided in the order' });
   }
@@ -94,8 +94,8 @@ app.post('/api/orders', (req, res) => {
     const insertOrderPromises = Object.entries(totalIngredients).map(([ingredient, quantity]) => {
       return new Promise((resolve, reject) => {
         db.run(
-          `INSERT INTO orders (order_id, ingredient_name, quantity, date) VALUES (?, ?, ?, ?)`,
-          [newOrderId, ingredient, quantity, new Date().toISOString()],
+          `INSERT INTO orders (order_id, ingredient_name, quantity, total_price, date) VALUES (?, ?, ?, ?, ?)`,
+          [newOrderId, ingredient, quantity, totalPrice, new Date().toISOString()], // Include totalPrice here
           function (err) {
             if (err) {
               console.error('Error inserting into orders table:', err); // Log the error
@@ -118,6 +118,7 @@ app.post('/api/orders', (req, res) => {
   });
 });
 
+
 app.get('/api/products/:productId/ingredients', (req, res) => {
   const productId = req.params.productId;
 
@@ -136,7 +137,6 @@ app.get('/api/products/:productId/ingredients', (req, res) => {
   });
 });
 
-
 app.put('/api/products/update', (req, res) => {
   const products = req.body.products;
 
@@ -144,30 +144,30 @@ app.put('/api/products/update', (req, res) => {
     db.run("BEGIN TRANSACTION");
     try {
       products.forEach(product => {
-          db.run('UPDATE products SET current_stock = ? WHERE id = ?', [product.current_stock, product.id]);
+        db.run('UPDATE products SET current_stock = ? WHERE id = ?', [product.current_stock, product.id]);
       });
       db.run("COMMIT");
       res.status(200).json({ message: 'Product stock updated successfully' });
-    } catch (error){
+    } catch (error) {
       db.run("ROLLBACK");
-      res.status(500).json ({ error: 'Error updating product stock' });
+      res.status(500).json({ error: 'Error updating product stock' });
     }
   });
 });
 
 app.post('/api/sales', (req, res) => {
-    const salesData = req.body;
+  const salesData = req.body;
 
-    const { total_price, profit, date } = salesData;
+  const { total_price, profit, date } = salesData;
 
-    const insertQuery = `INSERT INTO sales (total_price, profit, date) VALUES (?, ?, ?)`;
-    db.run(insertQuery, [total_price, profit, date], function (err) {
-      if (err) {
-        console.error("error inserting sale", err)
-        return res.status(500).json ({ error: err.message });
-      }
-      res.status(201).json({ message: 'Sale recorded successfully', id: this.lastID });
-    });
+  const insertQuery = `INSERT INTO sales (total_price, profit, date) VALUES (?, ?, ?)`;
+  db.run(insertQuery, [total_price, profit, date], function (err) {
+    if (err) {
+      console.error("error inserting sale", err)
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(201).json({ message: 'Sale recorded successfully', id: this.lastID });
+  });
 });
 
 app.get('/api/purchases/weekly', (req, res) => {
@@ -225,7 +225,6 @@ app.get('/api/sales/weekly', (req, res) => {
     res.json(rows);
   });
 });
-
 
 
 // Starta servern
