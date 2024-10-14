@@ -1,3 +1,49 @@
 .overview{
     margin-top: 60px;
+    transition: background-color 0.3s;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    animation-delay: 0.5s;
 }
+
+.OverviewImg {
+    width: 800px;
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 170px; 
+    display: block; 
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    animation-delay: 0.5s;
+}
+
+table {
+    width: 100%; 
+    border-collapse: collapse;  
+    font-size: 18px; 
+    margin-top: 20px; 
+  }
+  
+
+  th {
+    background-color: #244679;  
+    text-align: left; 
+    padding: 10px; 
+    font-size: 23px;
+  }
+  
+  td {
+    padding: 10px; 
+    border-bottom: 1px solid #ddd; 
+    font-size: 15px;  
+  }
+
+  h1 {
+    font-size: 30px;  
+  }
+
+  h2 {
+    font-size: 20px;  
+    margin-top: 30px;
+  }
+  

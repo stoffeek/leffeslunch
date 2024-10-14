@@ -20,10 +20,15 @@ function Header() {
             <Link to="/about" className="link">ABOUT</Link>
           </li>
           <li className="nav-item">
-            <Link to="/contact" className="link">CONTACT</Link>
+            <Link to="/leffes/myAccount" className="link">MY ACCOUNT</Link>
+            <ul className="dropdown-menu">
+              <li><Link to="/leffes/history" className="link">Order History</Link></li>
+              <li><Link to="/leffes/overview" className="link">Overview</Link></li>
+              <li><Link to="/leffes/sales" className="link">Sales</Link></li>
+            </ul> 
           </li>
           <li className="nav-item">
-            <Link to="/leffes/overview" className="link">OVERVIEW</Link> 
+            <Link to="/contact" className="link">CONTACT</Link>
           </li>
         </ul>
       </nav>

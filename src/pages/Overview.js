@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './Overview.css';
+import overviewImg from './img/overview.png';
+
 const Overview = () => {
   const [weeklyPurchases, setWeeklyPurchases] = useState([]);
   const [weeklySales, setWeeklySales] = useState([]);
+  
 
   // Hämta veckovisa inköp
   useEffect(() => {
@@ -36,6 +39,7 @@ const Overview = () => {
 
   return (
     <div className='overview'>
+      <img src={overviewImg} alt="Overview" className="OverviewImg" />
       <h1>Weekly Purchases and Sales</h1>
       
       <h2>Purchases per Week</h2>
