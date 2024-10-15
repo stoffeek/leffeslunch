@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import './Sales.css';
 import { fetchProducts } from "./Ordering";
+import salesImg from './img/sales.png';
+
 
 const API_URL = 'http://localhost:5001/api'
 
@@ -101,6 +103,7 @@ const Sales = () => {
 
     return (
         <div className="table-container">
+            <img src={salesImg} alt="Sales" className="SalesImg" />
             <h1>Product List</h1>
             <table>
                 <thead>

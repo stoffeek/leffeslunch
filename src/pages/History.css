@@ -7,20 +7,30 @@
     animation-delay: 0.5s;
   }
 
-  .MyAcc {
-    width: 500px;
+  .OrderHi {
+    width: 1000px;
     height: auto;
-    margin-top: 20px; 
+    margin-top: 20px;
+    margin-bottom: 70px; 
     display: block; 
     opacity: 0;
     animation: fadeIn 1s forwards;
     animation-delay: 0.5s;
 }
 
-  .HeaderRow {
-    display: flex;
-    justify-content: center;
-    padding: 10px;
+.LeffesLogo {
+  width: 550px; 
+  height: auto;
+  max-width: 100%; 
+  display: block; 
+  margin: 0 auto; 
+}
+
+.HeaderRow {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 100%; 
 }
 
 .OrderRow {
@@ -54,18 +64,6 @@
     background-color: #4e9feb; 
   }
   
-  .LeffesLogo {
-    width: 550px; 
-  }
-
-  .OrderHistory h2 {
-    font-size: 1.8rem; 
-    margin-bottom: 20px; 
-    text-align: left; 
-    color: #555; 
-    border-bottom: 2px solid #ccc; 
-    padding-bottom: 10px; 
-  }
   
   .OrderTable {
     width: 100%;
@@ -81,7 +79,7 @@
   }
   
   .OrderTable th {
-    background-color: #f2f2f2;
+    background-color: #244679;
     font-weight: bold;
   }
   

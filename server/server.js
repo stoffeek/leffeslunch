@@ -4,19 +4,20 @@ const sqlite3 = require('sqlite3').verbose();
 
 // Skapa en instans av Express
 const app = express();
-const PORT = 5001; // Port för servern
 
-// Anslut till SQLite-databasen
+// Port för servern
+const PORT = 5001; 
+
 const db = new sqlite3.Database('leffes.db', (err) => {
   if (err) {
     console.error('Error opening database: ' + err.message);
   } else {
     console.log('Connected to the sqlite database');
   }
-});
+})
 
 // Middleware
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:3000'})); // Tillåter cross-origin-requests (ex. från din frontend till backend)
 app.use(express.json()); // Gör så att servern kan tolka inkommande JSON-begäran
 
 // En enkel test-rutt för att verifiera att servern fungerar
@@ -28,36 +29,36 @@ app.get('/api', (req, res) => {
 app.get('/api/products', (req, res) => {
   const productsQuery = 'SELECT * FROM products';
   db.all(productsQuery, [], (err, rows) => {
-    if (err) {
+    if (err){
       return res.status(500).json({ error: err.message });
     }
     res.json(rows);
   });
 });
 
-// Hämta ingredienser från databasen
 app.get('/api/ingredients', (req, res) => {
   const ingredientsQuery = 'SELECT * FROM ingredients';
   db.all(ingredientsQuery, [], (err, rows) => {
-    if (err) {
+    if (err){
       return res.status(500).json({ error: err.message });
     }
-    console.log('Ingrediensdata:', rows);
+
+    
     res.json(rows);
   });
 });
 
-// Hämta recept från databasen
 app.get('/api/recipe', (req, res) => {
-  const recipeQuery = 'SELECT * FROM recipe';
-  db.all(recipeQuery, [], (err, rows) => {
-    if (err) {
+  const ingredientsQuery = 'SELECT * FROM recipe';
+  db.all(ingredientsQuery, [], (err, rows) => {
+    if (err){
       return res.status(500).json({ error: err.message });
     }
-    console.log('Receptdata:', rows);
+
     res.json(rows);
   });
 });
+
 
 // Hämta ordrar från databasen baserat på order_id
 app.get('/api/orders/:id', (req, res) => {
@@ -74,6 +75,35 @@ app.get('/api/orders/:id', (req, res) => {
     res.json(rows);
   });
 });
+=======
+  
+app.get('/api/sales', (req, res) => {
+  const ingredientsQuery = 'SELECT * FROM sales';
+  db.all(ingredientsQuery, [], (err, rows) => {
+    if (err){
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(rows);
+  });
+});
+
+app.get('/api/products/:productId/ingredients', (req, res) => {
+  const productId = req.params.productId;
+
+  const joinQuery = `
+    select i.id, i.name, i.price, r.quantity_needed
+    from ingredients i
+    JOIN recipe r ON i.id = r.ingredient_id
+    WHERE r.product_id = ?
+  `;
+
+  db.all(joinQuery, [productId], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(rows);
+  });
+});
 
 app.post('/api/orders', (req, res) => {
   const { ingredients } = req.body; 
@@ -81,38 +111,36 @@ app.post('/api/orders', (req, res) => {
   if (!ingredients || ingredients.length === 0) {
       return res.status(400).json({ error: 'No ingredients provided in the order' });
   }
-
+  // Get the current maximum order_id from the orders table
   db.get(`SELECT MAX(order_id) as maxOrderId FROM orders`, (err, row) => {
-      if (err) {
-          return res.status(500).json({ error: 'Error retrieving maximum order_id: ' + err.message });
-      }
-
-      const newOrderId = (row.maxOrderId || 0) + 1; 
-
-      const insertOrderPromises = ingredients.map(({ ingredient_name, quantity, total_price }) => {
-        const roundedTotalPrice = Math.round(total_price); // Round the total price for each ingredient
-          return new Promise((resolve, reject) => {
-              db.run(
-                  `INSERT INTO orders (order_id, ingredient_name, quantity, total_price, date) VALUES (?, ?, ?, ?, ?)`,
-                  [newOrderId, ingredient_name, quantity, roundedTotalPrice, new Date().toISOString()],
-                  function (err) {
-                      if (err) {
-                          console.error('Error inserting into orders table:', err); 
-                          reject('Error inserting into orders table: ' + err.message);
-                      } else {
-                          resolve();
-                      }
-                  }
-              );
-          });
+    if (err) {
+      return res.status(500).json({ error: 'Error retrieving maximum order_id: ' + err.message });
+    }
+    const newOrderId = (row.maxOrderId || 0) + 1; // If no orders exist yet, start with 1
+    // Insert each ingredient into the orders table with the new order_id
+    const insertOrderPromises = Object.entries(totalIngredients).map(([ingredient, quantity]) => {
+      return new Promise((resolve, reject) => {
+        db.run(
+          `INSERT INTO orders (order_id, ingredient_name, quantity, date) VALUES (?, ?, ?, ?)`,
+          [newOrderId, ingredient, quantity, new Date().toISOString()],
+          function (err) {
+            if (err) {
+              console.error('Error inserting into orders table:', err); // Log the error
+              reject('Error inserting into orders table: ' + err.message);
+            } else {
+              resolve();
+            }
+          }
+        );
       });
+    });
 
-      Promise.all(insertOrderPromises)
-          .then(() => res.status(200).json({ message: 'Order placed successfully!', order_id: newOrderId }))
-          .catch((error) => {
-              console.error('Error placing order:', error);
-              res.status(500).json({ error });
-          });
+     Promise.all(insertOrderPromises)
+      .then(() => res.status(200).json({ message: 'Order placed successfully!', order_id: newOrderId }))
+      .catch((error) => {
+          console.error('Error placing order:', error);
+          res.status(500).json({ error });
+    });
   });
 });
 
@@ -134,6 +162,7 @@ app.get('/api/products/:productId/ingredients', (req, res) => {
     res.json(rows);
   });
 });
+
 
 app.put('/api/products/update', (req, res) => {
   const products = req.body.products;
@@ -219,6 +248,7 @@ app.get('/api/purchases/order_totals', (req, res) => {
     res.json(rows);
   })
 })
+
 
 // Starta servern
 app.listen(PORT, () => {

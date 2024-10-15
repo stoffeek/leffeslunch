@@ -207,8 +207,7 @@ function Calculator() {
     }
 };
   
-  
-
+ 
   return (
     <div className="MainContent">
       <div className="Header">
