@@ -88,13 +88,17 @@
   }
   
   .ViewDetailsButton {
-    background-color: #244679;
+    background-color: #597291;
     color: white;
     border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
+    border-radius: 30px;
+    padding: 7px 10px;
     cursor: pointer;
     transition: background-color 0.3s;
+    width: 100%;
+    font-size: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
   
   .ViewDetailsButton:hover {
