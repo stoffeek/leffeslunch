@@ -47,7 +47,8 @@ const db = new sqlite3.Database('leffes.db', (err) => {
         date DATE DEFAULT CURRENT_TIMESTAMP,
         order_id INTEGER,
         ingredient_name TEXT NOT NULL,
-        quantity INTEGER NOT NULL
+        quantity INTEGER NOT NULL,
+        total_price INTEGER NOT NULL
           );`, (err) => {
 
         if (err) {
