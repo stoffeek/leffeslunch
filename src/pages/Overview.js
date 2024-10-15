@@ -62,16 +62,16 @@ const Overview = () => {
       <table>
         <thead>
           <tr>
-            <th>Week</th>
+            <th>Date</th>
             <th>Total Purchased (Quantity)</th>
             <th>Total spent for ingredients</th>
           </tr>
         </thead>
         <tbody>
+
           {weeklyPurchases.map((purchase, index) => {
             const costEntry = weeklyCosts.find(cost => parseInt(cost.week) === parseInt(purchase.week));
             const totalOrderPrice = costEntry ? costEntry.total_order_price : 0;
-
             return (
               <tr key={index}>
                 <td>{"w." + purchase.week}</td>

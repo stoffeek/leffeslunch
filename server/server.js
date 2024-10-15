@@ -196,7 +196,8 @@ app.post('/api/sales', (req, res) => {
 
 app.get('/api/purchases/weekly', (req, res) => {
   const query = `
-    SELECT strftime('%W-%Y', date) AS week, SUM(quantity) AS total_purchased
+    SELECT strftime('%W - %Y', date) AS week, SUM(quantity) AS total_purchased
+
     FROM orders
     GROUP BY week
     ORDER BY week DESC
@@ -218,7 +219,6 @@ app.get('/api/sales/weekly', (req, res) => {
     GROUP BY week
     ORDER BY week DESC
   `;
-
   db.all(query, [], (err, rows) => {
     if (err) {
       return res.status(500).json({ error: err.message });
