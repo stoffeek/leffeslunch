@@ -64,7 +64,7 @@ const Overview = () => {
           <tr>
             <th>Date</th>
             <th>Total Purchased (Quantity)</th>
-            <th>Total spent for ingredients</th>
+            <th>Total spent for ingredients (SEK)</th>
           </tr>
         </thead>
         <tbody>
@@ -87,7 +87,7 @@ const Overview = () => {
       <table>
         <thead>
           <tr>
-            <th>Week</th>
+            <th>Date</th>
             <th>Total Sales (SEK)</th>
             <th>Total Profit (SEK)</th>
           </tr>
@@ -95,7 +95,7 @@ const Overview = () => {
         <tbody>
           {weeklySales.map((sale, index) => (
             <tr key={index}>
-              <td>{sale.week}</td>
+              <td>{"w." + sale.week}</td>
               <td>{sale.total_sales}</td>
               <td>{sale.total_profit}</td>
             </tr>

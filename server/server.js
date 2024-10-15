@@ -214,7 +214,7 @@ app.get('/api/purchases/weekly', (req, res) => {
 // Hämta veckovisa försäljningar
 app.get('/api/sales/weekly', (req, res) => {
   const query = `
-    SELECT strftime('%Y-%W', date) AS week, SUM(total_price) AS total_sales, SUM(profit) AS total_profit
+    SELECT strftime('%W - %Y', date) AS week, SUM(total_price) AS total_sales, SUM(profit) AS total_profit
     FROM sales
     GROUP BY week
     ORDER BY week DESC
