@@ -87,58 +87,59 @@ app.get('/api/products/:productId/ingredients', (req, res) => {
 app.post('/api/orders', (req, res) => {
   const { totalIngredients } = req.body;
   if (!totalIngredients || Object.keys(totalIngredients).length === 0) {
-      return res.status(400).json({ error: 'No ingredients provided in the order' });
+    return res.status(400).json({ error: 'No ingredients provided in the order' });
   }
 
   // Get the current maximum order_id from the orders table
   db.get(`SELECT MAX(order_id) as maxOrderId FROM orders`, (err, row) => {
-      if (err) {
-          return res.status(500).json({ error: 'Error retrieving maximum order_id: ' + err.message });
-      }
-      const newOrderId = (row.maxOrderId || 0) + 1; // If no orders exist yet, start with 1
+    if (err) {
+      return res.status(500).json({ error: 'Error retrieving maximum order_id: ' + err.message });
+    }
+    const newOrderId = (row.maxOrderId || 0) + 1; // If no orders exist yet, start with 1
 
-      // Insert each ingredient into the orders table with the new order_id
-      const insertOrderPromises = Object.entries(totalIngredients).map(([ingredient, requiredQuantity]) => {
-          return new Promise((resolve, reject) => {
-              // Query to get the price and the base quantity from the ingredients table
-              db.get(`SELECT price, quantity FROM ingredients WHERE name = ?`, [ingredient], (err, ingredientRow) => {
-                  if (err || !ingredientRow) {
-                      reject('Error retrieving price and quantity for ingredient: ' + ingredient);
-                      return;
-                  }
+    // Insert each ingredient into the orders table with the new order_id
+    const insertOrderPromises = Object.entries(totalIngredients).map(([ingredient, requiredQuantity]) => {
+      return new Promise((resolve, reject) => {
+        // Query to get the price and the base quantity from the ingredients table
+        db.get(`SELECT price, quantity FROM ingredients WHERE name = ?`, [ingredient], (err, ingredientRow) => {
+          if (err || !ingredientRow) {
+            reject('Error retrieving price and quantity for ingredient: ' + ingredient);
+            return;
+          }
 
-                  const pricePerBaseQuantity = ingredientRow.price; // e.g., 32 SEK
-                  const baseQuantity = ingredientRow.quantity; // e.g., 200 grams
+          const pricePerBaseQuantity = ingredientRow.price; // e.g., 32 SEK
+          const baseQuantity = ingredientRow.quantity; // e.g., 200 grams
 
-                  // Calculate the price for the required quantity
-                  const priceForRequiredQuantity = (pricePerBaseQuantity / baseQuantity) * requiredQuantity;
+          // Calculate the price for the required quantity and round it
+          const priceForRequiredQuantity = Math.round((pricePerBaseQuantity / baseQuantity) * requiredQuantity); // Round the price
 
-                  // Insert the order with the calculated total price for the required quantity
-                  db.run(
-                      `INSERT INTO orders (order_id, ingredient_name, quantity, date, total_price) VALUES (?, ?, ?, ?, ?)`,
-                      [newOrderId, ingredient, requiredQuantity, new Date().toISOString(), priceForRequiredQuantity], // Insert calculated price
-                      function (err) {
-                          if (err) {
-                              console.error('Error inserting into orders table:', err);
-                              reject('Error inserting into orders table: ' + err.message);
-                          } else {
-                              resolve();
-                          }
-                      }
-                  );
-              });
-          });
+          // Insert the order with the calculated total price for the required quantity
+          db.run(
+            `INSERT INTO orders (order_id, ingredient_name, quantity, date, total_price) VALUES (?, ?, ?, ?, ?)`,
+            [newOrderId, ingredient, requiredQuantity, new Date().toISOString(), priceForRequiredQuantity], // Insert calculated price
+            function (err) {
+              if (err) {
+                console.error('Error inserting into orders table:', err);
+                reject('Error inserting into orders table: ' + err.message);
+              } else {
+                resolve();
+              }
+            }
+          );
+        });
       });
+    });
 
-      // Wait for all inserts to finish
-      Promise.all(insertOrderPromises)
-          .then(() => res.status(200).json({ message: 'Order placed successfully!', order_id: newOrderId }))
-          .catch((error) => {
-              console.error('Error placing order:', error);
-              res.status(500).json({ error });
-          });
+    // Wait for all inserts to finish
+    Promise.all(insertOrderPromises)
+      .then(() => res.status(200).json({ message: 'Order placed successfully!', order_id: newOrderId }))
+      .catch((error) => {
+        console.error('Error placing order:', error);
+        res.status(500).json({ error });
+      });
   });
 });
+
 
 
 
