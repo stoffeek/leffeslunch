@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
-import './Logout.css'; // Import the CSS for styling
+import './Logout.css';
 
 const Logout = () => {
   const [isGlitching, setIsGlitching] = useState(false);
-  const [showError, setShowError] = useState(false); // State for showing the error message
-  const [fakeCode, setFakeCode] = useState([]); // Store lines of fake "code"
-  const consoleRef = useRef(null); // Reference to the console for auto-scrolling
-
+  const [showError, setShowError] = useState(false);
+  const [fakeCode, setFakeCode] = useState([]);
+  const consoleRef = useRef(null); 
   useEffect(() => {
     const fakeCodeSnippets = [
       "C:\\WINDOWS\\System32> Error: System file not found.",
@@ -38,42 +37,42 @@ const Logout = () => {
       "C:\\WINDOWS\\System32> System has crashed."
     ];
 
-    let currentIndex = 0; // Track the current index of fake code
+    let currentIndex = 0; 
 
     const timeout1 = setTimeout(() => {
-      setIsGlitching(true); // Start the glitch effect
-      addFakeCode(); // Start adding fake code after glitching starts
-    }, 5000); // Begin glitching after 5 seconds
+      setIsGlitching(true);
+      addFakeCode(); 
+    }, 5000);
 
     const addFakeCode = () => {
       if (currentIndex < fakeCodeSnippets.length) {
         setFakeCode(prev => [...prev, fakeCodeSnippets[currentIndex]]);
-        currentIndex++; // Increment the index
-        // Auto-scroll to the bottom each time a new line is added
+        currentIndex++; 
+     
         if (consoleRef.current) {
           consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
         }
-        setTimeout(addFakeCode, 150); // Schedule the next snippet every 150ms
+        setTimeout(addFakeCode, 150); 
       }
     };
 
     const timeout2 = setTimeout(() => {
-      setShowError(true); // Show the error message after 9.5 seconds
-    }, 9500); // Show the error message after 9.5 seconds
+      setShowError(true); 
+    }, 9500); 
 
     return () => {
       clearTimeout(timeout1);
       clearTimeout(timeout2);
     };
-  }, []); // Empty dependency array to ensure this effect only runs once
+  }, []); 
 
   useEffect(() => {
     if (showError) {
       const crashTimeout = setTimeout(() => {
-        window.location.href = 'http://localhost:3000'; // Redirect after 2 seconds
-      }, 10000); // Delay of 2 seconds before redirecting
+        window.location.href = 'http://localhost:3000'; 
+      }, 10000); 
 
-      return () => clearTimeout(crashTimeout); // Clear timeout if component unmounts
+      return () => clearTimeout(crashTimeout); 
     }
   }, [showError]);
 

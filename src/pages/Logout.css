@@ -1,25 +1,23 @@
-/* Base styling for the normal logout page */
 .body {
-    z-index: 999; /* Ensure it's above other components */
+    z-index: 999; 
 
 }
 .logout-container {
-    position: fixed; /* or absolute */
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background-color: #D3D3D3;
-    color: white; /* Adjust text color as needed */
-    z-index: 999; /* Ensure it's above other components */
+    color: white; 
+    z-index: 999; 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Prevent scrollbars if content overflows */
+    overflow: hidden; 
   }
   
-  /* Styling for the message container */
   .logout-message {
     text-align: center;
     animation: fadeIn 1.5s ease-in-out;
@@ -34,7 +32,6 @@
     font-size: 1.2rem;
   }
   
-  /* Console prompt effect */
   .console-prompt {
     background-color: black;
     color: lime;
@@ -42,19 +39,18 @@
     padding: 20px;
     border-radius: 5px;
     margin-top: 20px;
-    width: 800px; /* Maintained width */
-    height: 400px; /* Maintained height */
-    white-space: pre-wrap; /* Preserve whitespace for formatting */
-    overflow: hidden; /* Remove the scroll bar */
+    width: 800px;
+    height: 400px;
+    white-space: pre-wrap; 
+    overflow: hidden; 
     position: absolute;
-    top: 20px; /* Position at the top */
-    left: 20px; /* Position at the left */
-    text-align: left; /* Align text to the left */
+    top: 20px; 
+    left: 20px; 
+    text-align: left;
     box-shadow: 0px 0px 10px rgba(0, 255, 0, 0.5);
-    z-index: 1000; /* Make sure it's on top */
+    z-index: 1000; 
   }
   
-  /* Styling the spinner before the glitch effect */
   .logout-spinner {
     margin-top: 30px;
     width: 50px;
@@ -65,25 +61,21 @@
     animation: spin 1s linear infinite;
   }
   
-  /* Keyframes for fade-in effect */
   @keyframes fadeIn {
     0% { opacity: 0; }
     100% { opacity: 1; }
   }
   
-  /* Keyframes for normal spinner */
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
   
-  /* Glitch effect */
   .glitch {
     background: black;
     color: lime;
   }
   
-  /* Keep the glitch effect only for h1 and p elements outside of error-message */
 .glitch h1, .glitch p {
     position: relative;
     font-family: 'Courier New', Courier, monospace;
@@ -94,13 +86,11 @@
     display: none;
   }
   
-  /* Keyframes for glitchy background color effect */
   @keyframes glitch-bg {
     0% { background-color: #000; }
     100% { background-color: #111; }
   }
   
-  /* Glitchy text shaking and distortion effect */
   @keyframes glitch-text {
     0% { text-shadow: 2px 2px red; transform: translate(0, 0); }
     33% { text-shadow: -2px 2px blue; transform: translate(-2px, 2px); }
@@ -109,19 +99,19 @@
   }
   
   .error-message {
-    position: absolute; /* Use absolute positioning */
-    top: 10px; /* Position it 10px from the top */
-    left: 10px; /* Position it 10px from the left */
-    background-color: rgba(156, 38, 38, 0.897); /* Dark background for contrast */
-    color: rgb(211, 207, 207); /* Red text for visibility */
+    position: absolute; 
+    top: 10px; 
+    left: 10px; 
+    background-color: rgba(156, 38, 38, 0.897); 
+    color: rgb(211, 207, 207);
     padding: 20px;
     font-size: larger;
     border-radius: 5px;
     max-height: 1000000px;
-    font-family: monospace; /* Monospace font for the error message */
-    white-space: pre-wrap; /* Keep line breaks */
-    overflow: auto; /* Allow scrolling if the message is long */
-    z-index: 1000; /* Ensure it's on top of other elements */
-    text-align: left; /* Align text to the left */
+    font-family: monospace; 
+    white-space: pre-wrap; 
+    overflow: auto; 
+    z-index: 1000; 
+    text-align: left; 
 }
 
