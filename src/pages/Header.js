@@ -25,6 +25,7 @@ function Header() {
               <li><Link to="/leffes/history" className="link">Order History</Link></li>
               <li><Link to="/leffes/overview" className="link">Overview</Link></li>
               <li><Link to="/leffes/sales" className="link">Sales</Link></li>
+              <li><Link to="/leffes/logout" className="link">Logout</Link></li>
             </ul> 
           </li>
           <li className="nav-item">
