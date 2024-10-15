@@ -75,7 +75,6 @@ app.get('/api/orders/:id', (req, res) => {
     res.json(rows);
   });
 });
-=======
   
 app.get('/api/sales', (req, res) => {
   const ingredientsQuery = 'SELECT * FROM sales';
