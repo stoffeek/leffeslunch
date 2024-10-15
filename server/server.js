@@ -75,46 +75,44 @@ app.get('/api/orders/:id', (req, res) => {
   });
 });
 
-// Lägg till ny order
 app.post('/api/orders', (req, res) => {
-  const { totalIngredients, totalPrice } = req.body;
-  if (!totalIngredients || Object.keys(totalIngredients).length === 0) {
-    return res.status(400).json({ error: 'No ingredients provided in the order' });
+  const { ingredients } = req.body; 
+
+  if (!ingredients || ingredients.length === 0) {
+      return res.status(400).json({ error: 'No ingredients provided in the order' });
   }
 
-  // Get the current maximum order_id from the orders table
   db.get(`SELECT MAX(order_id) as maxOrderId FROM orders`, (err, row) => {
-    if (err) {
-      return res.status(500).json({ error: 'Error retrieving maximum order_id: ' + err.message });
-    }
+      if (err) {
+          return res.status(500).json({ error: 'Error retrieving maximum order_id: ' + err.message });
+      }
 
-    const newOrderId = (row.maxOrderId || 0) + 1; // If no orders exist yet, start with 1
+      const newOrderId = (row.maxOrderId || 0) + 1; 
 
-    // Insert each ingredient into the orders table with the new order_id
-    const insertOrderPromises = Object.entries(totalIngredients).map(([ingredient, quantity]) => {
-      return new Promise((resolve, reject) => {
-        db.run(
-          `INSERT INTO orders (order_id, ingredient_name, quantity, total_price, date) VALUES (?, ?, ?, ?, ?)`,
-          [newOrderId, ingredient, quantity, totalPrice, new Date().toISOString()], // Include totalPrice here
-          function (err) {
-            if (err) {
-              console.error('Error inserting into orders table:', err); // Log the error
-              reject('Error inserting into orders table: ' + err.message);
-            } else {
-              resolve();
-            }
-          }
-        );
+      const insertOrderPromises = ingredients.map(({ ingredient_name, quantity, total_price }) => {
+        const roundedTotalPrice = Math.round(total_price); // Round the total price for each ingredient
+          return new Promise((resolve, reject) => {
+              db.run(
+                  `INSERT INTO orders (order_id, ingredient_name, quantity, total_price, date) VALUES (?, ?, ?, ?, ?)`,
+                  [newOrderId, ingredient_name, quantity, roundedTotalPrice, new Date().toISOString()],
+                  function (err) {
+                      if (err) {
+                          console.error('Error inserting into orders table:', err); 
+                          reject('Error inserting into orders table: ' + err.message);
+                      } else {
+                          resolve();
+                      }
+                  }
+              );
+          });
       });
-    });
 
-    // Wait for all inserts to finish
-    Promise.all(insertOrderPromises)
-      .then(() => res.status(200).json({ message: 'Order placed successfully!', order_id: newOrderId }))
-      .catch((error) => {
-        console.error('Error placing order:', error); // Log the error
-        res.status(500).json({ error });
-      });
+      Promise.all(insertOrderPromises)
+          .then(() => res.status(200).json({ message: 'Order placed successfully!', order_id: newOrderId }))
+          .catch((error) => {
+              console.error('Error placing order:', error);
+              res.status(500).json({ error });
+          });
   });
 });
 
@@ -186,29 +184,6 @@ app.get('/api/purchases/weekly', (req, res) => {
   });
 });
 
-app.get('/api/purchases/weeklyspent', (req, res) => {
-  const query = `
-    SELECT 
-      o.order_id,
-      SUM(i.price * r.quantity_needed) AS total_order_price
-    FROM 
-      orders o
-    JOIN 
-      recipe r ON r.ingredient_id = (SELECT id FROM ingredients WHERE name = o.ingredient_name)
-    JOIN 
-      ingredients i ON r.ingredient_id = i.id
-    GROUP BY 
-      o.order_id
-  `;
-
-  db.all(query, [], (err, rows) => {
-    if (err) {
-      return res.status(500).json({ error: err.message});
-    }
-    res.json(rows);
-  })
-})
-
 // Hämta veckovisa försäljningar
 app.get('/api/sales/weekly', (req, res) => {
   const query = `
@@ -226,6 +201,24 @@ app.get('/api/sales/weekly', (req, res) => {
   });
 });
 
+
+app.get('/api/purchases/order_totals', (req, res) => {
+  const query = `
+    SELECT 
+      strftime('%W', date) AS week,
+      SUM(total_price) AS total_order_price
+    FROM 
+      orders
+    GROUP BY 
+      week
+  `;
+  db.all(query, [], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(rows);
+  })
+})
 
 // Starta servern
 app.listen(PORT, () => {

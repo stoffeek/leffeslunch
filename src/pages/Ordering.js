@@ -167,32 +167,45 @@ function Calculator() {
 
   const handleBuy = async (e) => {
     e.preventDefault();
-  
-    console.log('Köper... skickar data:', totalIngredients);
+
+    console.log('KÃ¶per... skickar data:', totalIngredients);
+    
+    const ingredientsToOrder = Object.entries(totalIngredients).map(([ingredientName, quantity]) => {
+        const ingredientData = ingredients.find(i => i.name === ingredientName);
+        const pricePerUnit = ingredientData.price / ingredientData.quantity; 
+        const totalPriceForIngredient = pricePerUnit * quantity;
+
+        return {
+            ingredient_name: ingredientName,
+            quantity: quantity,
+            total_price: totalPriceForIngredient,
+        };
+    });
+
     try {
-      const response = await fetch(`${API_URL}/orders`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ totalIngredients, totalPrice }) // Include totalPrice here
-      });
-  
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Order placed successfully:', data);
-        alert('Order placed successfully!');
-  
-        const form = e.target.closest('form');
-        form.reset();
-  
-        setTotalIngredients({});
-        setTotalPrice(0);
-      } else {
-        console.error('Failed to place order:', response.statusText);
-      }
+        const response = await fetch(`${API_URL}/orders`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ingredients: ingredientsToOrder }) 
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log('Order placed successfully:', data);
+            alert('Order placed successfully!');
+
+            const form = e.target.closest('form');
+            form.reset();
+
+            setTotalIngredients({});
+            setTotalPrice(0);
+        } else {
+            console.error('Failed to place order:', response.statusText);
+        }
     } catch (error) {
-      console.error('Error placing order:', error);
+        console.error('Error placing order:', error);
     }
-  };
+};
   
   
 
@@ -224,9 +237,9 @@ function Calculator() {
                 let displayAmount;
 
                 if (amount >= 1000000) {
-                  displayAmount = (amount / 1000000).toFixed(1) + " tonne"; 
+                  displayAmount = (amount / 1000000).toFixed(0) + " tonne"; 
                 } else if (amount >= 1000) {
-                  displayAmount = (amount / 1000).toFixed(1) + " kilo";
+                  displayAmount = (amount / 1000).toFixed(0) + " kilo";
                 } else {
                   displayAmount = amount + " gram";
                 }

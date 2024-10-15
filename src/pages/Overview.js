@@ -3,6 +3,7 @@ import './Overview.css';
 const Overview = () => {
   const [weeklyPurchases, setWeeklyPurchases] = useState([]);
   const [weeklySales, setWeeklySales] = useState([]);
+  const [weeklyCosts, setWeeklyCosts] = useState([]);
 
   // Hämta veckovisa inköp
   useEffect(() => {
@@ -34,6 +35,25 @@ const Overview = () => {
     fetchWeeklySales();
   }, []);
 
+  // Hämta veckovisa utgifter
+  useEffect(() => {
+    const fetchWeeklyCosts = async () => {
+      try {
+        const response = await fetch('http://localhost:5001/api/purchases/order_totals');
+        const data = await response.json();
+        setWeeklyCosts(data);
+      } catch (error) {
+        console.error('Error fetching weekly sales:', error)
+      }
+    };
+
+    fetchWeeklyCosts();
+  }, []);
+
+  
+  console.log(weeklyCosts)
+ 
+
   return (
     <div className='overview'>
       <h1>Weekly Purchases and Sales</h1>
@@ -48,13 +68,18 @@ const Overview = () => {
           </tr>
         </thead>
         <tbody>
-          {weeklyPurchases.map((purchase, index) => (
-            <tr key={index}>
-              <td>{purchase.week}</td>
-              <td>{purchase.total_purchased}</td>
-              <td></td>
-            </tr>
-          ))}
+          {weeklyPurchases.map((purchase, index) => {
+            const costEntry = weeklyCosts.find(cost => parseInt(cost.week) === parseInt(purchase.week));
+            const totalOrderPrice = costEntry ? costEntry.total_order_price : 0;
+
+            return (
+              <tr key={index}>
+                <td>{purchase.week}</td>
+                <td>{purchase.total_purchased}</td>
+                <td>{totalOrderPrice}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
 
