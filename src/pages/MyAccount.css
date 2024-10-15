@@ -1,3 +1,7 @@
+body {
+  zoom: 0.75; 
+}
+
 .MyAccountContainer {
   padding: 20px;
   margin-top: 60px;
@@ -11,7 +15,8 @@
   width: 800px;
   height: auto;
   margin-top: 20px;
-  margin-bottom: 70px;
+  margin-bottom: 50px;
+  margin-left: 20px;
   display: block;
   transition: background-color 0.3s;
   opacity: 0;
@@ -21,18 +26,21 @@
 
 .LeffesLogo {
   width: 850px;
+  height: auto;
+  max-width: 20%; 
+  margin: 0 auto; 
 }
 
 .HeaderRow {
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 
 .ActionButton {
   display: block;
-  width: 1000px;
+  width: 570px;
   padding: 10px;
   margin: 10px auto;
-  font-size: 36px;
+  font-size: 30px;
   background-color: #4CAF50;
   color: white;
   border: none;
