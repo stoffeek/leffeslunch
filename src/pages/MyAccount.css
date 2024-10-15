@@ -1,43 +1,45 @@
 .MyAccountContainer {
-    transition: background-color 0.3s;
-    opacity: 0;
-    animation: fadeIn 1s forwards;
-    animation-delay: 0.5s;
+  padding: 20px;
+  margin-top: 60px;
+  transition: background-color 0.3s;
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+  animation-delay: 0.5s;
 }
 
 .MyAccount {
-    width: 1000px;
-    height: auto;
-    margin-top: 20px;
-    margin-bottom: 70px; 
-    display: block; 
-    transition: background-color 0.3s;
-    opacity: 0;
-    animation: fadeIn 1s forwards;
-    animation-delay: 0.5s;
+  width: 800px;
+  height: auto;
+  margin-top: 20px;
+  margin-bottom: 70px;
+  display: block;
+  transition: background-color 0.3s;
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+  animation-delay: 0.5s;
 }
 
 .LeffesLogo {
-    width: 850px; 
-  }
+  width: 850px;
+}
 
-  .HeaderRow {
-    margin-bottom: 20px;
-  }
-  
-  .ActionButton {
-    display: block;
-    width: 1000px;
-    padding: 10px;
-    margin: 10px auto;
-    font-size: 36px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .ActionButton:hover {
-    background-color: #b9aa65;
-  }
+.HeaderRow {
+  margin-bottom: 20px;
+}
+
+.ActionButton {
+  display: block;
+  width: 1000px;
+  padding: 10px;
+  margin: 10px auto;
+  font-size: 36px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.ActionButton:hover {
+  background-color: #b9aa65;
+}

@@ -1,6 +1,7 @@
 
 .OrderHistoryContainer {
     padding: 20px;
+    margin-top: 60px;
     font-family: 'Roboto', sans-serif;
     opacity: 0;
     animation: fadeIn 1s forwards;
