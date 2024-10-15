@@ -42,6 +42,8 @@ app.get('/api/ingredients', (req, res) => {
     if (err){
       return res.status(500).json({ error: err.message });
     }
+
+    
     res.json(rows);
   });
 });
@@ -52,10 +54,28 @@ app.get('/api/recipe', (req, res) => {
     if (err){
       return res.status(500).json({ error: err.message });
     }
+
     res.json(rows);
   });
 });
 
+
+// Hämta ordrar från databasen baserat på order_id
+app.get('/api/orders/:id', (req, res) => {
+  const orderId = req.params.id;
+  const ordersQuery = 'SELECT * FROM orders WHERE order_id = ?';
+
+  db.all(ordersQuery, [orderId], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+    res.json(rows);
+  });
+});
+  
 app.get('/api/sales', (req, res) => {
   const ingredientsQuery = 'SELECT * FROM sales';
   db.all(ingredientsQuery, [], (err, rows) => {
@@ -84,11 +104,11 @@ app.get('/api/products/:productId/ingredients', (req, res) => {
   });
 });
 
-// Lägg till ny order
 app.post('/api/orders', (req, res) => {
-  const { totalIngredients } = req.body;
-  if (!totalIngredients || Object.keys(totalIngredients).length === 0) {
-    return res.status(400).json({ error: 'No ingredients provided in the order' });
+  const { ingredients } = req.body; 
+
+  if (!ingredients || ingredients.length === 0) {
+      return res.status(400).json({ error: 'No ingredients provided in the order' });
   }
   // Get the current maximum order_id from the orders table
   db.get(`SELECT MAX(order_id) as maxOrderId FROM orders`, (err, row) => {
@@ -113,13 +133,32 @@ app.post('/api/orders', (req, res) => {
         );
       });
     });
-    // Wait for all inserts to finish
-    Promise.all(insertOrderPromises)
+
+     Promise.all(insertOrderPromises)
       .then(() => res.status(200).json({ message: 'Order placed successfully!', order_id: newOrderId }))
       .catch((error) => {
-        console.error('Error placing order:', error); // Log the error
-        res.status(500).json({ error });
-      });
+          console.error('Error placing order:', error);
+          res.status(500).json({ error });
+    });
+  });
+});
+
+
+app.get('/api/products/:productId/ingredients', (req, res) => {
+  const productId = req.params.productId;
+
+  const joinQuery = `
+    select i.id, i.name, i.price, r.quantity_needed
+    from ingredients i
+    JOIN recipe r ON i.id = r.ingredient_id
+    WHERE r.product_id = ?
+  `;
+
+  db.all(joinQuery, [productId], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(rows);
   });
 });
 
@@ -131,30 +170,30 @@ app.put('/api/products/update', (req, res) => {
     db.run("BEGIN TRANSACTION");
     try {
       products.forEach(product => {
-          db.run('UPDATE products SET current_stock = ? WHERE id = ?', [product.current_stock, product.id]);
+        db.run('UPDATE products SET current_stock = ? WHERE id = ?', [product.current_stock, product.id]);
       });
       db.run("COMMIT");
       res.status(200).json({ message: 'Product stock updated successfully' });
-    } catch (error){
+    } catch (error) {
       db.run("ROLLBACK");
-      res.status(500).json ({ error: 'Error updating product stock' });
+      res.status(500).json({ error: 'Error updating product stock' });
     }
   });
 });
 
 app.post('/api/sales', (req, res) => {
-    const salesData = req.body;
+  const salesData = req.body;
 
-    const { total_price, profit, date } = salesData;
+  const { total_price, profit, date } = salesData;
 
-    const insertQuery = `INSERT INTO sales (total_price, profit, date) VALUES (?, ?, ?)`;
-    db.run(insertQuery, [total_price, profit, date], function (err) {
-      if (err) {
-        console.error("error inserting sale", err)
-        return res.status(500).json ({ error: err.message });
-      }
-      res.status(201).json({ message: 'Sale recorded successfully', id: this.lastID });
-    });
+  const insertQuery = `INSERT INTO sales (total_price, profit, date) VALUES (?, ?, ?)`;
+  db.run(insertQuery, [total_price, profit, date], function (err) {
+    if (err) {
+      console.error("error inserting sale", err)
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(201).json({ message: 'Sale recorded successfully', id: this.lastID });
+  });
 });
 
 app.get('/api/purchases/weekly', (req, res) => {
@@ -191,6 +230,23 @@ app.get('/api/sales/weekly', (req, res) => {
 });
 
 
+app.get('/api/purchases/order_totals', (req, res) => {
+  const query = `
+    SELECT 
+      strftime('%Y-%W', date) AS week,
+      SUM(total_price) AS total_order_price
+    FROM 
+      orders
+    GROUP BY 
+      week
+  `;
+  db.all(query, [], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(rows);
+  })
+})
 
 
 // Starta servern
