@@ -1,4 +1,3 @@
-
 .OrderHistoryContainer {
     padding: 20px;
     margin-top: 60px;
@@ -9,9 +8,10 @@
   }
 
   .OrderHi {
-    width: 1000px;
+    width: 900px;
     height: auto;
     margin-top: 20px;
+    margin-left: 20px;
     margin-bottom: 70px; 
     display: block; 
     opacity: 0;
@@ -22,14 +22,13 @@
 .LeffesLogo {
   width: 550px; 
   height: auto;
-  max-width: 100%; 
-  display: block; 
+  max-width: 20%; 
   margin: 0 auto; 
 }
 
 .HeaderRow {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   padding: 10px;
   width: 100%; 
 }
