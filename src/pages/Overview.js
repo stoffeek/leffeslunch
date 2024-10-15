@@ -53,7 +53,7 @@ const Overview = () => {
         <tbody>
           {weeklyPurchases.map((purchase, index) => (
             <tr key={index}>
-              <td>{purchase.week}</td>
+              <td>{"W" + purchase.week}</td>
               <td>{purchase.total_purchased}</td>
             </tr>
           ))}
