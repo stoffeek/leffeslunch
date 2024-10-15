@@ -50,9 +50,6 @@ const Overview = () => {
     fetchWeeklyCosts();
   }, []);
 
-  
-  console.log(weeklyCosts)
- 
 
   return (
     <div className='overview'>
@@ -68,19 +65,28 @@ const Overview = () => {
           </tr>
         </thead>
         <tbody>
-          {weeklyPurchases.map((purchase, index) => {
-            const costEntry = weeklyCosts.find(cost => parseInt(cost.week) === parseInt(purchase.week));
-            const totalOrderPrice = costEntry ? costEntry.total_order_price : 0;
+  {weeklyPurchases.length > 0 && weeklyCosts.length > 0 ? (
+    weeklyPurchases.map((purchase, index) => {
+      // Find the corresponding cost entry for the current purchase week
+      const costEntry = weeklyCosts.find(cost => cost.week === purchase.week);
 
-            return (
-              <tr key={index}>
-                <td>{purchase.week}</td>
-                <td>{purchase.total_purchased}</td>
-                <td>{totalOrderPrice}</td>
-              </tr>
-            );
-          })}
-        </tbody>
+      // If found, get the total_order_price, otherwise default to 0
+      const totalOrderPrice = costEntry ? costEntry.total_order_price : 0;
+
+      return (
+        <tr key={index}>
+          <td>{purchase.week}</td>
+          <td>{purchase.total_purchased}</td>
+          <td>{totalOrderPrice}</td> {/* Correctly accessing total_order_price */}
+        </tr>
+      );
+    })
+  ) : (
+    <tr>
+      <td colSpan="3">Loading...</td>
+    </tr>
+  )}
+</tbody>
       </table>
 
       <h2>Sales and Profit per Week</h2>

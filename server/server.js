@@ -205,7 +205,7 @@ app.get('/api/sales/weekly', (req, res) => {
 app.get('/api/purchases/order_totals', (req, res) => {
   const query = `
     SELECT 
-      strftime('%W', date) AS week,
+      strftime('%Y-%W', date) AS week,
       SUM(total_price) AS total_order_price
     FROM 
       orders
