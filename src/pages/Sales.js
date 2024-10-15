@@ -3,7 +3,6 @@ import './Sales.css';
 import { fetchProducts } from "./Ordering";
 import salesImg from './img/sales.png';
 
-
 const API_URL = 'http://localhost:5001/api'
 
 const Sales = () => {
