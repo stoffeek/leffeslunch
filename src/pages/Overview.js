@@ -5,7 +5,7 @@ import overviewImg from './img/overview.png';
 const Overview = () => {
   const [weeklyPurchases, setWeeklyPurchases] = useState([]);
   const [weeklySales, setWeeklySales] = useState([]);
-  
+
 
   // Hämta veckovisa inköp
   useEffect(() => {
@@ -40,45 +40,45 @@ const Overview = () => {
   return (
     <div className='overview'>
       <img src={overviewImg} alt="Overview" className="OverviewImg" />
-      <h1>Weekly Purchases and Sales</h1>
-      
-      <h2>Purchases per Week</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Week</th>
-            <th>Total Purchased (Quantity)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {weeklyPurchases.map((purchase, index) => (
-            <tr key={index}>
-              <td>{purchase.week}</td>
-              <td>{purchase.total_purchased}</td>
+      <div class="overviewTable">
+        <h1>Weekly Purchases and Sales</h1>
+        <h2>Purchases per Week</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>Total Purchased (Quantity)</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <h2>Sales and Profit per Week</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Week</th>
-            <th>Total Sales (SEK)</th>
-            <th>Total Profit (SEK)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {weeklySales.map((sale, index) => (
-            <tr key={index}>
-              <td>{sale.week}</td>
-              <td>{sale.total_sales}</td>
-              <td>{sale.total_profit}</td>
+          </thead>
+          <tbody>
+            {weeklyPurchases.map((purchase, index) => (
+              <tr key={index}>
+                <td>{purchase.week}</td>
+                <td>{purchase.total_purchased}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <h2>Sales and Profit per Week</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>Total Sales (SEK)</th>
+              <th>Total Profit (SEK)</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {weeklySales.map((sale, index) => (
+              <tr key={index}>
+                <td>{sale.week}</td>
+                <td>{sale.total_sales}</td>
+                <td>{sale.total_profit}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
