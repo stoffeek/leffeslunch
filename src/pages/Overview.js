@@ -1,17 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import './Overview.css';
+import {
+  mockWeeklyPurchases,
+  mockWeeklySales,
+  mockWeeklyCosts,
+} from './Mockdata';
+
 const Overview = () => {
   const [weeklyPurchases, setWeeklyPurchases] = useState([]);
   const [weeklySales, setWeeklySales] = useState([]);
   const [weeklyCosts, setWeeklyCosts] = useState([]);
 
-  // Hämta veckovisa inköp
+  const useMockData = true;
+
   useEffect(() => {
     const fetchWeeklyPurchases = async () => {
       try {
+        let purchasesData = useMockData ? mockWeeklyPurchases : [];
         const response = await fetch('http://localhost:5001/api/purchases/weekly');
-        const data = await response.json();
-        setWeeklyPurchases(data);
+        if (response.ok) {
+          const liveData = await response.json();
+          purchasesData = [...purchasesData, ...liveData];
+        }
+        setWeeklyPurchases(purchasesData);
       } catch (error) {
         console.error('Error fetching weekly purchases:', error);
       }
@@ -20,13 +31,16 @@ const Overview = () => {
     fetchWeeklyPurchases();
   }, []);
 
-  // Hämta veckovisa försäljningar
   useEffect(() => {
     const fetchWeeklySales = async () => {
       try {
+        let salesData = useMockData ? mockWeeklySales : [];
         const response = await fetch('http://localhost:5001/api/sales/weekly');
-        const data = await response.json();
-        setWeeklySales(data);
+        if (response.ok) {
+          const liveData = await response.json();
+          salesData = [...salesData, ...liveData];
+        }
+        setWeeklySales(salesData);
       } catch (error) {
         console.error('Error fetching weekly sales:', error);
       }
@@ -35,24 +49,28 @@ const Overview = () => {
     fetchWeeklySales();
   }, []);
 
-  // Hämta veckovisa utgifter
   useEffect(() => {
     const fetchWeeklyCosts = async () => {
       try {
+        let costsData = useMockData ? mockWeeklyCosts : [];
         const response = await fetch('http://localhost:5001/api/purchases/order_totals');
-        const data = await response.json();
-        setWeeklyCosts(data);
+        if (response.ok) {
+          const liveData = await response.json();
+          costsData = [...costsData, ...liveData];
+        }
+        setWeeklyCosts(costsData);
       } catch (error) {
-        console.error('Error fetching weekly sales:', error)
+        console.error('Error fetching weekly costs:', error);
       }
     };
 
     fetchWeeklyCosts();
   }, []);
 
-  
-  console.log(weeklyCosts)
- 
+  const getTotalQuantitySold = (week) => {
+    const saleEntry = weeklySales.find(sale => parseInt(sale.week) === parseInt(week));
+    return saleEntry ? saleEntry.total_quantity_sold || 0 : 0;
+  };
 
   return (
     <div className='overview'>
@@ -65,18 +83,21 @@ const Overview = () => {
             <th>Date</th>
             <th>Total Purchased (Quantity)</th>
             <th>Total spent for ingredients (SEK)</th>
+            <th>Total Quantity Sold</th>
           </tr>
         </thead>
         <tbody>
-
           {weeklyPurchases.map((purchase, index) => {
             const costEntry = weeklyCosts.find(cost => parseInt(cost.week) === parseInt(purchase.week));
             const totalOrderPrice = costEntry ? costEntry.total_order_price : 0;
+            const totalQuantitySold = getTotalQuantitySold(purchase.week);
+
             return (
               <tr key={index}>
                 <td>{"w." + purchase.week}</td>
                 <td>{purchase.total_purchased}</td>
                 <td>{totalOrderPrice}</td>
+                <td>{totalQuantitySold}</td>
               </tr>
             );
           })}
@@ -90,6 +111,7 @@ const Overview = () => {
             <th>Date</th>
             <th>Total Sales (SEK)</th>
             <th>Total Profit (SEK)</th>
+            <th>Total Quantity Sold</th>
           </tr>
         </thead>
         <tbody>
@@ -98,6 +120,7 @@ const Overview = () => {
               <td>{"w." + sale.week}</td>
               <td>{sale.total_sales}</td>
               <td>{sale.total_profit}</td>
+              <td>{sale.total_quantity_sold || 'N/A'}</td>
             </tr>
           ))}
         </tbody>
