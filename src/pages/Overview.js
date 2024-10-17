@@ -10,9 +10,8 @@ const Overview = () => {
   const [weeklyPurchases, setWeeklyPurchases] = useState([]);
   const [weeklySales, setWeeklySales] = useState([]);
   const [weeklyCosts, setWeeklyCosts] = useState([]);
-
   const useMockData = true;
-
+  
   useEffect(() => {
     const fetchWeeklyPurchases = async () => {
       try {
@@ -75,7 +74,6 @@ const Overview = () => {
   return (
     <div className='overview'>
       <h1>Weekly Purchases and Sales</h1>
-      
       <h2>Purchases per Week</h2>
       <table>
         <thead>
@@ -103,7 +101,6 @@ const Overview = () => {
           })}
         </tbody>
       </table>
-
       <h2>Sales and Profit per Week</h2>
       <table>
         <thead>
@@ -122,9 +119,18 @@ const Overview = () => {
               <td>{sale.total_profit}</td>
               <td>{sale.total_quantity_sold || 'N/A'}</td>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {weeklySales.map((sale, index) => (
+              <tr key={index}>
+                <td>{sale.week}</td>
+                <td>{sale.total_sales}</td>
+                <td>{sale.total_profit}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

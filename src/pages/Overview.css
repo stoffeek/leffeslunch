@@ -1,9 +1,16 @@
 .overview{
+    padding: 20px;
     margin-top: 60px;
     transition: background-color 0.3s;
     opacity: 0;
     animation: fadeIn 1s forwards;
     animation-delay: 0.5s;
+}
+
+.overviewTable{
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
 .OverviewImg {
@@ -35,7 +42,7 @@ table {
   td {
     padding: 10px; 
     border-bottom: 1px solid #ddd; 
-    font-size: 15px;  
+    font-size: 20px;  
   }
 
   h1 {
