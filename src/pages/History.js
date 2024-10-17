@@ -1,7 +1,7 @@
 import React, { useState } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import './History.css'; 
-import leffesLogo from './img/leffelogo.png';
+import leffesLogoo from './img/leffelogoo.png';
 import orderHi from './img/order_history.png';
 import Modal from './Modal'; 
 
@@ -121,7 +121,7 @@ const OrderHistory = () => {
         <div className="OrderHistoryContainer">
             <img src={orderHi} alt="Order History" className="OrderHi" />
             <div className="HeaderRow">
-                <img src={leffesLogo} alt="Leffes Lunchlådor Logo" className="LeffesLogo" />
+                {/* <img src={leffesLogoo} alt="Leffes Lunchlådor Logoo" className="LeffesLogoo" /> */}
             </div>
             <div className="OrderRow">
                 <button className="NewOrderButton" onClick={handleNewOrder}>

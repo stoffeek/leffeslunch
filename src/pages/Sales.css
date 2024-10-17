@@ -1,7 +1,6 @@
-/* Sales.css */
 .table-container {
-    margin: 20px;
     padding: 20px;
+    margin-top: 60px;    
     border-radius: 8px;
     background-color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -12,10 +11,11 @@
 }
 
 .SalesImg {
-    width: 800px;
+    width: 600px;
     height: auto;
-    margin-top: 10px;
-    margin-bottom: 170px; 
+    margin-left: 20px;
+    margin-top: 5x;
+    margin-bottom: 80px; 
     display: block; 
     opacity: 0;
     animation: fadeIn 1s forwards;
