@@ -9,7 +9,6 @@ import Recipe from "./pages/Recipe";
 import Sales from "./pages/Sales";
 import Overview from "./pages/Overview";
 import MyAccount from "./pages/MyAccount"; 
-import Logout from "./pages/Logout"; 
 function App() {
   return (
     <Router>
@@ -24,7 +23,6 @@ function App() {
           <Route path="/leffes/sales" element={<Sales />} />
           <Route path="/leffes/overview" element={<Overview />} /> 
           <Route path="/leffes/myAccount" element={<MyAccount />} /> 
-          <Route path="/leffes/Logout" element={<Logout />} /> 
         </Routes>
       </div>
     </Router>
