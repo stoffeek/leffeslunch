@@ -1,0 +1,117 @@
+.body {
+    z-index: 999; 
+
+}
+.logout-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #D3D3D3;
+    color: white; 
+    z-index: 999; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+  }
+  
+  .logout-message {
+    text-align: center;
+    animation: fadeIn 1.5s ease-in-out;
+  }
+  
+  .logout-message h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+  }
+  
+  .logout-message p {
+    font-size: 1.2rem;
+  }
+  
+  .console-prompt {
+    background-color: black;
+    color: lime;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+    width: 800px;
+    height: 400px;
+    white-space: pre-wrap; 
+    overflow: hidden; 
+    position: absolute;
+    top: 20px; 
+    left: 20px; 
+    text-align: left;
+    box-shadow: 0px 0px 10px rgba(0, 255, 0, 0.5);
+    z-index: 1000; 
+  }
+  
+  .logout-spinner {
+    margin-top: 30px;
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .glitch {
+    background: black;
+    color: lime;
+  }
+  
+.glitch h1, .glitch p {
+    position: relative;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+  
+  .glitch-spinner {
+    display: none;
+  }
+  
+  @keyframes glitch-bg {
+    0% { background-color: #000; }
+    100% { background-color: #111; }
+  }
+  
+  @keyframes glitch-text {
+    0% { text-shadow: 2px 2px red; transform: translate(0, 0); }
+    33% { text-shadow: -2px 2px blue; transform: translate(-2px, 2px); }
+    66% { text-shadow: 2px -2px green; transform: translate(2px, -2px); }
+    100% { text-shadow: -2px -2px magenta; transform: translate(-2px, -2px); }
+  }
+  
+  .error-message {
+    position: absolute; 
+    top: 10px; 
+    left: 10px; 
+    background-color: rgba(156, 38, 38, 0.897); 
+    color: rgb(211, 207, 207);
+    padding: 20px;
+    font-size: larger;
+    border-radius: 5px;
+    max-height: 1000000px;
+    font-family: monospace; 
+    white-space: pre-wrap; 
+    overflow: auto; 
+    z-index: 1000; 
+    text-align: left; 
+}
+
