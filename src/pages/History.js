@@ -121,7 +121,7 @@ const OrderHistory = () => {
         <div className="OrderHistoryContainer">
             <img src={orderHi} alt="Order History" className="OrderHi" />
             <div className="HeaderRow">
-                <img src={leffesLogoo} alt="Leffes Lunchlådor Logoo" className="LeffesLogoo" />
+                {/* <img src={leffesLogoo} alt="Leffes Lunchlådor Logoo" className="LeffesLogoo" /> */}
             </div>
             <div className="OrderRow">
                 <button className="NewOrderButton" onClick={handleNewOrder}>

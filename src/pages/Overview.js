@@ -118,20 +118,11 @@ const Overview = () => {
               <td>{sale.total_sales}</td>
               <td>{sale.total_profit}</td>
               <td>{sale.total_quantity_sold || 'N/A'}</td>
-            </tr>
-          </thead>
-          <tbody>
-            {weeklySales.map((sale, index) => (
-              <tr key={index}>
-                <td>{sale.week}</td>
-                <td>{sale.total_sales}</td>
-                <td>{sale.total_profit}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-    </div>
   );
 };
 

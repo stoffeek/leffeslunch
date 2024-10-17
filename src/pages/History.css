@@ -11,8 +11,8 @@
     width: 900px;
     height: auto;
     margin-top: 20px;
-    margin-left: 20px;
-    margin-bottom: 70px; 
+    margin-left: 30px;
+    margin-bottom: 0; 
     display: block; 
     opacity: 0;
     animation: fadeIn 1s forwards;
@@ -23,14 +23,15 @@
   width: 450px; 
   height: auto;
   max-width: 20%; 
-  margin: 0 auto; 
+  margin: 0 auto;
+  margin-right: 35px; 
 }
 
 .HeaderRow {
   display: flex;
   justify-content: flex-end;
-  padding: 10px;
-  width: 100%; 
+  width: 100%;
+  margin: 0; 
 }
 
 .OrderRow {
@@ -46,16 +47,12 @@
 }
 
   .NewOrderButton {
-    background-color: #244679; 
+    background-color: #dbc979; 
     color: white;
-    border: none; 
-    border-radius: 5px; 
-    padding: 20px 40px; 
+    font-size: 1rem;
+    border-radius: 20px; 
     cursor: pointer; 
     font-size: 1.5rem; 
-    margin-bottom: 40px;
-    margin: 0 auto;
-    display: block; 
     width: fit-content; 
     transition: background-color 0.3s; 
   }

@@ -25,10 +25,12 @@ body {
 }
 
 .LeffesLogo {
-  width: 850px;
+  width: 1000px;
   height: auto;
-  max-width: 20%; 
-  margin: 0 auto; 
+  max-width: 25%; 
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 30px; 
 }
 
 .HeaderRow {

@@ -25,7 +25,7 @@ const MyAccount = () => {
 
   return (
     <div className="MyAccountContainer">
-      <img src={myAccount} alt="My Account" className="MyAccount" />
+      {/* <img src={myAccount} alt="My Account" className="MyAccount" /> */}
       <div className="HeaderRow">
         <img src={leffesLogo} alt="Leffes Lunchlådor Logo" className="LeffesLogo" />
       </div>
