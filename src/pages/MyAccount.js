@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './MyAccount.css'; 
 import leffesLogo from './img/leffelogo.png';
-import myAccount from './img/my_account.png';
 
 const MyAccount = () => {
   const navigate = useNavigate(); 
@@ -25,7 +24,6 @@ const MyAccount = () => {
 
   return (
     <div className="MyAccountContainer">
-      {/* <img src={myAccount} alt="My Account" className="MyAccount" /> */}
       <div className="HeaderRow">
         <img src={leffesLogo} alt="Leffes Lunchlådor Logo" className="LeffesLogo" />
       </div>
