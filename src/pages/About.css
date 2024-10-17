@@ -1,0 +1,28 @@
+body {
+    zoom: 0.75; 
+  }
+
+
+.about-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    animation-delay: 0.5s;
+}
+
+.about-us {
+    width: 700px;
+    margin-top: 80px;
+    align-self: flex-start;
+    margin-left: 160px;
+}
+
+.about-txt {
+    width: 80%;
+    text-align: center;
+    align-self: center;
+    margin-top: 80px;
+    margin-bottom: 50PX;
+}
