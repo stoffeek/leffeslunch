@@ -18,10 +18,22 @@
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    width: 1300px; 
-    max-width: 90%;
+    width: 120vw; 
+    max-width: 110vw; 
     padding: 20px;
     font-family: 'Roboto', sans-serif;
+    max-height: 120vh; 
+    overflow-y: scroll; 
+    overflow-x: hidden;
+}
+
+.modal-content::-webkit-scrollbar {
+    display: none; /* För Webkit-baserade webbläsare (Chrome, Safari) */
+}
+
+.modal-content {
+    -ms-overflow-style: none; /* För Internet Explorer och Edge */
+    scrollbar-width: none; /* För Firefox */
 }
 
 .receipt-header {
@@ -53,14 +65,21 @@
 }
 
 .close-button {
-    background-color: #ff4757;
+    background-color: #ff4756c9;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    padding: 10px 15px;
+    padding: 10px 30px;
     font-size: 16px;
-    margin-left: 1300px; 
+    margin-left: 1340px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: fit-content;
+    font-size: 100%;
+    position: fixed; 
+    bottom: 20px; 
+    right: 20px; 
 }
 
 .close-button:hover {
