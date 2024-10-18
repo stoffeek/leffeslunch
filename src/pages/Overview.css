@@ -16,8 +16,8 @@
 .OverviewImg {
     width: 800px;
     height: auto;
-    margin-top: 20px;
-    margin-bottom: 170px; 
+    margin-top: 5px;
+    margin-bottom: 60px; 
     display: block; 
     opacity: 0;
     animation: fadeIn 1s forwards;
