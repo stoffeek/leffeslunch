@@ -8,8 +8,10 @@ import Contact from './pages/Contact';
 import Recipe from "./pages/Recipe";
 import Sales from "./pages/Sales";
 import Overview from "./pages/Overview";
-import MyAccount from "./pages/MyAccount"; 
-import Logout from "./pages/Logout"; 
+import MyAccount from "./pages/MyAccount";
+import About from "./pages/About";
+
+
 function App() {
   return (
     <Router>
@@ -24,7 +26,7 @@ function App() {
           <Route path="/leffes/sales" element={<Sales />} />
           <Route path="/leffes/overview" element={<Overview />} /> 
           <Route path="/leffes/myAccount" element={<MyAccount />} /> 
-          <Route path="/leffes/Logout" element={<Logout />} /> 
+          <Route path="/about" element={<About />} /> 
         </Routes>
       </div>
     </Router>
